@@ -23,7 +23,7 @@
   },
   "rnpm": {
     "assets": [
-      "resources/fonts"
+      "src/soho/fonts"
     ]
   }
 }
