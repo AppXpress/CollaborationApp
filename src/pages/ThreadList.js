@@ -59,8 +59,6 @@ export default class List extends Component {
                 threads: result.data.result
             });
         }
-
-        console.log(this.state.threads);
     }
 
     viewThread(item) {

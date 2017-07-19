@@ -3,9 +3,15 @@ import React, {
 } from 'react';
 
 import {
+    FlatList
+} from 'react-native';
+
+import {
     Page,
     Card,
+    ComplexText,
     Field,
+    ListItem,
     Navigation
 } from '../soho/All';
 
@@ -30,12 +36,30 @@ export default class View extends Component {
         this.reload();
     }
 
-    async reload() {
-        let result = await AppX.fetch('$CCThreadT1', this.props.uid);
-
-        this.setState({
-            thread: result.data
+    reload() {
+        AppX.fetch('$CCThreadT1', this.props.uid).then(result => {
+            this.setState({
+                thread: result.data
+            });
         });
+
+        AppX.query('$CCCommentT1', `Parent.rootId = ${this.props.uid}`).then(result => {
+            this.setState({
+                comments: result.data
+            });
+        });
+    }
+
+    renderComment(item) {
+        return (
+            <ListItem>
+                <ComplexText
+                    main={item.Body}
+                    secondary={item.Date}
+                    tertiary={item.Author + ' of ' + item.AuthorOrg}
+                />
+            </ListItem>
+        );
     }
 
     render() {
@@ -43,6 +67,19 @@ export default class View extends Component {
             <Page>
                 <Card>
                     <Field label='Title' entry={this.state.thread.Title} />
+                </Card>
+
+                <Card title='Comments'>
+                    <FlatList
+                        data={this.state.comments}
+                        keyExtractor={item => item.uid}
+                        renderItem={({ item }) => this.renderThread(item)}
+                        refreshing={this.state.loading}
+                    />
+
+                    {this.state.loading &&
+                        <Loading />
+                    }
                 </Card>
             </Page>
         );

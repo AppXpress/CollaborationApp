@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import config from '../../resources/fonts/config';
+import config from './fonts/config';
 
 import {
     StyleSheet,
