@@ -38,6 +38,15 @@ export default class List extends Component {
         this.reload();
     }
 
+    willAppear(){
+        Navigation.set(this, {
+            title: 'Threads',
+            buttons: [
+                { icon: 'user', id: 'logout' }
+            ]
+        });
+    }
+
     logout() {
         this.props.navigator.resetTo({ screen: 'Login' });
     }
