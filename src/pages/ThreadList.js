@@ -9,9 +9,11 @@ import {
 import {
     Page,
     Card,
+    ComplexText,
     ListItem,
     Loading,
-    Navigation
+    Navigation,
+    Tag
 } from '../soho/All';
 
 import {
@@ -27,21 +29,60 @@ export default class List extends Component {
         this.state = {};
 
         Navigation.set(this, {
-            title: 'Threads'
+            title: 'Threads',
+            buttons: [
+                { icon: 'user', id: 'logout' }
+            ]
         });
+
+        this.reload();
+    }
+
+    logout() {
+        this.props.navigator.resetTo({ screen: 'Login' });
     }
 
     async reload() {
-        this.setState({
-            threads: await AppX.query('$CCThreadT1')
+        let result = await AppX.query('$CCThreadT1');
+
+        if (result.data) {
+            this.setState({
+                threads: result.data.result
+            });
+        }
+
+        console.log(this.state.threads);
+    }
+
+    viewThread(item) {
+        this.props.navigator.push({
+            screen: 'ThreadView',
+            passProps: {
+                uid: item.uid
+            }
         });
     }
 
     renderThread(item) {
         return (
-            <ListItem>
-
-            </ListItem>
+            <ListItem onPress={() => this.viewThread(item)}>
+                <ComplexText
+                    main={item.Title}
+                    secondary={item.Date}
+                    tertiary={item.Author + ' of ' + item.AuthorOrg}
+                />
+                <Tag.List>
+                    <Tag alert={(() => {
+                        if (item.Score < -2) {
+                            return '1';
+                        } else if (item.Score < 2) {
+                            return '2';
+                        } else {
+                            return '4';
+                        }
+                    })()}>{'Score: ' + item.Score}</Tag>
+                </Tag.List>
+            </ListItem >
         );
     }
 
