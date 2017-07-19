@@ -116,7 +116,7 @@ export default class Login extends Component {
 			}
 
 			this.props.navigator.resetTo({
-				screen: 'IssueList'
+				screen: 'ThreadList'
 			});
 		} else {
 			setTimeout(() => { alert('Login failed. Please try again.') }, 1000);
