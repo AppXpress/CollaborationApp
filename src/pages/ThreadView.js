@@ -74,8 +74,9 @@ export default class View extends Component {
         if(!newThread.Votes){
             newThread.Votes = [];
             newThread.Votes.push({
-                User: user,
-                VoteUp: vote
+                User: userLogin,
+                VoteUp: vote,
+                userOrg: userOrg,
             });
         }
     }
@@ -98,8 +99,9 @@ export default class View extends Component {
         if(vote){    
             if(!voteFound){
                 newThread.Votes.push({
-                    User: user,
-                    VoteUp: vote
+                    User: userLogin,
+                    VoteUp: vote,
+                    UserOrg: userOrg,
                     });
                 }   
             }
@@ -128,8 +130,7 @@ export default class View extends Component {
                     /> 
 
                     <Button icon='down-arrow'
-                            
-                            onPress={() => this.setVote('false')}
+                             onPress={() => this.setVote('false')}
                     />        
                 </Card>
 

@@ -80,7 +80,21 @@ export default class Login extends Component {
 		}
 	}
 
+	async setUserData(){
+		var userinfo;
+		await AppX.fetch('User','self').then(async result => {
+			var info = result.data;
+			global.userLogin = info.login;
+
+			await AppX.fetch('OrganizationDetail', info.organizationUid).then(result =>{
+				global.userOrg = result.name;
+			});
+
+		});
+	}
+
 	async setCredentials() {
+		
 		if (this.state.save) {
 			await Utilities.storageSet('username', this.state.username);
 			await Utilities.storageSet('password', this.state.password);
@@ -108,7 +122,8 @@ export default class Login extends Component {
 		this.setState({ loading: true });
 
 		var appx = await AppX.login(this.state.username, this.state.password, this.state.eid, this.environment);
-
+		
+		this.setUserData();
 		this.setState({ loading: false });
 		if (appx.data) {
 			if (__DEV__) {
