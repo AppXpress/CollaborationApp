@@ -14,7 +14,7 @@ import {
     Loading,
     Navigation,
     Tag,
-    Button
+    Button,
 } from '../soho/All';
 
 import {
@@ -27,7 +27,9 @@ export default class List extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            filter : ''
+        };
 
         Navigation.set(this, {
             title: 'Threads',
@@ -48,18 +50,27 @@ export default class List extends Component {
         });
     }
 
+    componentWillMount(){
+        this.reload();
+    }
+
     logout() {
         this.props.navigator.resetTo({ screen: 'Login' });
     }
 
     async reload() {
-        let result = await AppX.query('$CCThreadT1');
+        let result = await AppX.query('$CCThreadT1', this.state.filter);
 
         if (result.data) {
             this.setState({
                 threads: result.data.result
             });
         }
+    }
+
+    setFilter(query) {
+        this.state.filter = query
+        this.reload();
     }
 
     viewThread(item) {
@@ -104,6 +115,16 @@ export default class List extends Component {
                   })}
                   title="+Create Thread"
                 />
+            <ListItem fill>
+                <Button
+                        icon='filter'
+                        title='Filter'
+                        onPress={() => this.props.navigator.push({
+                            screen: 'FilterThreads',
+                            passProps: { setFilter: query => this.setFilter(query) }
+                        })}
+                    />
+            </ListItem>
                 <FlatList
                     data={this.state.threads}
                     keyExtractor={item => item.uid}

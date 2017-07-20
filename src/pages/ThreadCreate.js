@@ -82,7 +82,7 @@ export default class ThreadCreate extends Component {
             rows={7}
           />
           <Button
-            onPress={this.makeThread()}
+            onPress={()=>this.makeThread}
             title="Create New Thread"
           />
         </Page>
