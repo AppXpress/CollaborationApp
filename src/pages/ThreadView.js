@@ -45,7 +45,7 @@ export default class View extends Component {
 
         AppX.query('$CCCommentT1', `Parent.rootId = ${this.props.uid}`).then(result => {
             this.setState({
-                comments: result.data
+                comments: result.data.result
             });
         });
     }
@@ -73,7 +73,7 @@ export default class View extends Component {
                     <FlatList
                         data={this.state.comments}
                         keyExtractor={item => item.uid}
-                        renderItem={({ item }) => this.renderThread(item)}
+                        renderItem={({ item }) => this.renderComment(item)}
                         refreshing={this.state.loading}
                     />
 
