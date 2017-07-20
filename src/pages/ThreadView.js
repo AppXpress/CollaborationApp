@@ -66,9 +66,6 @@ export default class View extends Component {
     async setVote(vote){
 
         var newThread = this.state.thread;
-        //var user = await Utilities.storageGet('username');
-        //console.log(user);
-        console.log(newThread);
         var voteFound;
     if(vote){
         if(!newThread.Votes){
@@ -107,7 +104,7 @@ export default class View extends Component {
             }
         }
 
-        console.log(newThread);
+
         await AppX.persist(newThread);
         this.reload();
     }
