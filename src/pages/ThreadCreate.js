@@ -18,10 +18,9 @@ import {
     Card,
     ComplexText,
     ListItem,
-    Loading,
     Navigation,
     Tag,
-    Button
+    Button,
 } from 'gtn-soho';
 
 export default class ThreadCreate extends Component {
@@ -44,6 +43,7 @@ export default class ThreadCreate extends Component {
   }
 
   async makeThread(){
+    this.setState({loading: true});
     var thread = {
       type: '$CCThreadT1',
       Date: new Date(),
@@ -53,6 +53,10 @@ export default class ThreadCreate extends Component {
 			}
     }
     var postedThread = await AppX.create(thread);
+    if(!postedThread.data){
+      alert('We were\'nt able to create your thread. Please try again later.');
+    }
+
     var newUID = postedThread.data.create.result.uid;
     var body = {
       type: '$CCCommentT1',
@@ -64,7 +68,12 @@ export default class ThreadCreate extends Component {
 				externalType: '$CCThreadT1',
 			}
     }
-    await AppX.create(body);
+    var postedThreadBody = await AppX.create(body);
+    if(!postedThreadBody.data){
+      alert('We were\'nt able to create your thread. Please try again later.');
+    }
+
+
     this.props.navigator.pop();
     this.props.navigator.push({
         screen: 'ThreadView',
@@ -77,6 +86,7 @@ export default class ThreadCreate extends Component {
   render() {
       return (
         <Page>
+          <Card>
           <Text>
            {"Thread Title"}
           </Text>
@@ -101,6 +111,7 @@ export default class ThreadCreate extends Component {
             onPress={()=>this.makeThread()}
             title="Create New Thread"
           />
+          </Card>
         </Page>
       );
   }
