@@ -13,7 +13,8 @@ import {
     ListItem,
     Loading,
     Navigation,
-    Tag
+    Tag,
+    Button
 } from '../soho/All';
 
 import {
@@ -96,6 +97,12 @@ export default class List extends Component {
     render() {
         return (
             <Page>
+                <Button
+                  onPress={() => alert("test")}
+                  title="+Create Thread"
+                  color="#841584"
+                  accessibilityLabel="Learn more about this purple button"
+                />
                 <FlatList
                     data={this.state.threads}
                     keyExtractor={item => item.uid}

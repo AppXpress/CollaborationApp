@@ -10,6 +10,7 @@ Navigation.registerComponent('Login', () => require('./pages/Login').default);
 Navigation.registerComponent('Settings', () => require('./pages/Settings').default);
 Navigation.registerComponent('ThreadList', () => require('./pages/ThreadList').default);
 Navigation.registerComponent('ThreadView', () => require('./pages/ThreadView').default);
+Navigation.registerComponent('ThreadCreate', () => require('./pages/ThreadCreate').default);
 
 Navigation.startSingleScreenApp({
     screen: {
