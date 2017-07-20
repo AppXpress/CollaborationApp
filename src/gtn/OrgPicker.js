@@ -9,12 +9,9 @@ import {
 } from 'react-native';
 
 import {
-	Picker
-} from '../soho/All';
-
-import {
-	getHandler
-} from '../soho/Tools';
+	Picker,
+	helpers
+} from 'gtn-soho';
 
 import * as AppX from './AppX';
 
@@ -56,7 +53,7 @@ export default class OrgPicker extends Component {
 				{...this.props}
 				title='Select an organization'
 				selectedValue={this.state.value}
-				onValueChange={getHandler(this, 'onValueChange')}
+				onValueChange={helpers.getHandler(this, 'onValueChange')}
 			>
 				{this.state.orgs.map(org => (
 					<Picker.Item label={org.name} secondary={org.memberId} value={org.memberId} key={'Org' + org.memberId} />

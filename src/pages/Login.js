@@ -13,7 +13,7 @@ import {
 	TextInput,
 	Picker,
 	Loading
-} from '../soho/All';
+} from 'gtn-soho';
 
 import {
 	AppX,

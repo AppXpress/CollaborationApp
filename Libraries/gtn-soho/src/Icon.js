@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import config from './fonts/config';
+import config from '../fonts/soho';
 
 import {
     StyleSheet,
@@ -9,7 +9,7 @@ import {
 
 import {
     getColor
-} from './Tools';
+} from '../helpers';
 
 /**
  * Component for displaying SoHo icons

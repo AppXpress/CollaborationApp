@@ -10,7 +10,7 @@ import {
 import {
 	getHandler,
 	getColor
-} from './Tools';
+} from '../helpers';
 
 /**
  * A SoHo text input component

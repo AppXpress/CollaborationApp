@@ -8,7 +8,7 @@ import {
 
 import {
     getColor
-} from './Tools';
+} from '../helpers';
 
 /**
  * Component for displaying up to 3 pieces of text in SoHo style

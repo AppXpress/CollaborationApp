@@ -10,7 +10,7 @@ import {
     Navigation,
     TextInput,
     Button
-} from '../soho/All';
+} from 'gtn-soho';
 
 import {
     AppX,
@@ -29,16 +29,16 @@ export default class FilterThreads extends Component {
             title: 'Filter'
         });
 
-     
+
     }
 
-     setFilter() {
+    setFilter() {
         constraints = [];
 
         if (this.state.title) {
             constraints.push(`Title CONTAINS "${this.state.title}"`);
         }
-        if(this.state.author){
+        if (this.state.author) {
             constraints.push(`Author CONTAINS "${this.state.author}"`)
         }
 
@@ -55,19 +55,19 @@ export default class FilterThreads extends Component {
         console.log(query)
     }
 
-    render(){
+    render() {
         return (
             <Page>
                 <Card>
                     <TextInput
                         label='Title'
                         value={this.state.title}
-                        onChangeText={(text)=> this.setState({ title: text})}
+                        onChangeText={(text) => this.setState({ title: text })}
                     />
                     <TextInput
                         label='Author'
                         value={this.state.author}
-                        onChangeText={(text)=> this.setState({ author: text})}
+                        onChangeText={(text) => this.setState({ author: text })}
                     />
                     <Button
                         title='Set filter'

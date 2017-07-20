@@ -14,7 +14,7 @@ import {
     ListItem,
     Navigation,
     Button
-} from '../soho/All';
+} from 'gtn-soho';
 
 import {
     AppX,
@@ -134,7 +134,7 @@ export default class View extends Component {
                 </Card>
 
                 <Card title='Comments'>
-                <ListItem fill>
+                    <ListItem fill>
                         <Button
                             icon='mingle-share'
                             title='New Comment'

@@ -13,7 +13,7 @@ import {
 import {
 	getHandler,
 	getColor
-} from './Tools';
+} from '../helpers';
 
 /**
  * SoHo style field with label component

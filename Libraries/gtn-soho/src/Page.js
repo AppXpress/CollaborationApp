@@ -8,7 +8,7 @@ import {
 
 import {
 	getColor
-} from './Tools';
+} from '../helpers';
 
 /**
  * A page component in SoHo style

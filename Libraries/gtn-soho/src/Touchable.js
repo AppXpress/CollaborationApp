@@ -11,7 +11,7 @@ import {
 import {
 	getHandler,
 	getColor
-} from './Tools';
+} from '../helpers';
 
 /**
  * Helper component for getting the right touch component for each platform

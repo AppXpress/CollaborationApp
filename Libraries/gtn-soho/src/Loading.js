@@ -15,7 +15,7 @@ import Page from './Page';
 import {
     getColor,
     getHandler
-} from './Tools';
+} from '../helpers';
 
 /**
  * Component for displaying loading indicators in SoHo style

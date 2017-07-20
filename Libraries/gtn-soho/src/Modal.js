@@ -15,7 +15,7 @@ import Card from './Card';
 import {
 	getHandler,
 	getColor
-} from './Tools';
+} from '../helpers';
 
 /**
  * SoHo style modal component
