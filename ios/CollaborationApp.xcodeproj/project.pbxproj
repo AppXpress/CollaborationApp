@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -38,7 +37,7 @@
 		3FB199B2C37F4A08AB53BF0E /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2DD8C0DAF394AF780EF0621 /* libReactNativeNavigation.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		D2EF182E5CF048BDBB23139F /* soho.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BFE5B26E198F4BD5B8120D2F /* soho.ttf */; };
+		D9D2652E41A348EDBB96C442 /* soho.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7B7C5FA93E24F65A258886C /* soho.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -310,9 +309,9 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		BCCE4FBF6E294D4382E287FC /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		C2DD8C0DAF394AF780EF0621 /* libReactNativeNavigation.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeNavigation.a; sourceTree = "<group>"; };
-		BFE5B26E198F4BD5B8120D2F /* soho.ttf */ = {isa = PBXFileReference; name = "soho.ttf"; path = "../src/soho/fonts/soho.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		EABCA6121F1FF8CF00BD59C1 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		ED7677AD6B1142BE953B7B1D /* libRNFetchBlob.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFetchBlob.a; sourceTree = "<group>"; };
+		F7B7C5FA93E24F65A258886C /* soho.ttf */ = {isa = PBXFileReference; name = "soho.ttf"; path = "../node_modules/gtn-soho/fonts/soho.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -482,7 +481,7 @@
 		24B9B1B90B784047A69E90DA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C7729A1ECFAA41DEB62ADEB2 /* soho.ttf */,
+				F7B7C5FA93E24F65A258886C /* soho.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1003,7 +1002,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				D2EF182E5CF048BDBB23139F /* soho.ttf in Resources */,
+				D9D2652E41A348EDBB96C442 /* soho.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

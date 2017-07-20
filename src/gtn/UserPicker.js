@@ -9,12 +9,9 @@ import {
 } from 'react-native';
 
 import {
-	Picker
-} from '../soho/All';
-
-import {
-	getHandler
-} from '../soho/Tools';
+	Picker,
+	helpers
+} from 'gtn-soho';
 
 import * as AppX from './AppX';
 
@@ -52,7 +49,7 @@ export default class UserPicker extends Component {
 				{...this.props}
 				title='Select a user'
 				selectedValue={this.state.value}
-				onValueChange={getHandler(this, 'onValueChange')}
+				onValueChange={helpers.getHandler(this, 'onValueChange')}
 			>
 				{this.state.users.map(user => (
 					<Picker.Item label={user.login} value={user.uid} key={user.uid} />

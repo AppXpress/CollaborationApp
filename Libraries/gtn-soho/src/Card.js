@@ -8,7 +8,7 @@ import {
 
 import {
 	getColor
-} from './Tools';
+} from '../helpers';
 
 /**
  * SoHo styled card container component

@@ -10,7 +10,7 @@ import {
 import {
 	getHandler,
 	getColor
-} from './Tools';
+} from '../helpers';
 
 /**
  * Renders a SoHo styled switch component

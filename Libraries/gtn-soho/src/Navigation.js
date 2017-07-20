@@ -4,7 +4,7 @@ import {
 
 import {
     getColor
-} from './Tools';
+} from '../helpers';
 
 import Icon from './Icon';
 

@@ -15,7 +15,7 @@ import {
     Navigation,
     Tag,
     Button,
-} from '../soho/All';
+} from 'gtn-soho';
 
 import {
     AppX,
@@ -28,7 +28,7 @@ export default class List extends Component {
         super(props);
 
         this.state = {
-            filter : ''
+            filter: ''
         };
 
         Navigation.set(this, {
@@ -41,7 +41,7 @@ export default class List extends Component {
         this.reload();
     }
 
-    willAppear(){
+    willAppear() {
         Navigation.set(this, {
             title: 'Threads',
             buttons: [
@@ -50,7 +50,7 @@ export default class List extends Component {
         });
     }
 
-    componentWillMount(){
+    componentWillMount() {
         this.reload();
     }
 
@@ -108,8 +108,8 @@ export default class List extends Component {
     render() {
         return (
             <Page>
-            <ListItem fill>
-                <Button
+                <ListItem fill>
+                    <Button
                         icon='filter'
                         title='Filter'
                         onPress={() => this.props.navigator.push({
@@ -117,7 +117,7 @@ export default class List extends Component {
                             passProps: { setFilter: query => this.setFilter(query) }
                         })}
                     />
-            </ListItem>
+                </ListItem>
                 <FlatList
                     data={this.state.threads}
                     keyExtractor={item => item.uid}

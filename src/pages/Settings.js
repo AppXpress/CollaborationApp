@@ -7,7 +7,7 @@ import {
 	Page,
 	TextInput,
 	Picker,
-} from '../soho/All';
+} from 'gtn-soho';
 
 import {
 	AppX,

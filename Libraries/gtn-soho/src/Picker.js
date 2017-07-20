@@ -21,7 +21,7 @@ import Touchable from './Touchable';
 import {
 	getHandler,
 	getColor
-} from './Tools';
+} from '../helpers';
 
 /**
  * Picker component styled like SoHo

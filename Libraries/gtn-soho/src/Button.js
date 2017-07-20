@@ -12,7 +12,7 @@ import Touchable from './Touchable';
 
 import {
 	getColor
-} from './Tools';
+} from '../helpers';
 
 /**
  * SoHo style button component

@@ -11,7 +11,7 @@ import Touchable from './Touchable';
 
 import {
     getColor
-} from './Tools';
+} from '../helpers';
 
 /**
  * A component for item lists in SoHo style

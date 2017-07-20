@@ -12,7 +12,7 @@ import {
 	Navigation,
 	Page,
 	TextInput
-} from '../soho/All';
+} from 'gtn-soho';
 
 export default class CreateComment extends Component {
 
@@ -57,7 +57,7 @@ export default class CreateComment extends Component {
 		this.setState({ loading: false });
 	}
 
-render() {
+	render() {
 		return (
 			<Page>
 				<Card>
@@ -72,7 +72,7 @@ render() {
 						primary
 						hue='turquoise'
 						title='Submit'
-						onPress={()=> this.postComment()}
+						onPress={() => this.postComment()}
 					/>
 
 					{this.state.loading &&
