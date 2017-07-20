@@ -34,7 +34,8 @@ export default class List extends Component {
         Navigation.set(this, {
             title: 'Threads',
             buttons: [
-                { icon: 'user', id: 'logout' }
+                { icon: 'user', id: 'logout' }, 
+                { icon: 'add', id: 'newThread' },
             ]
         });
 
@@ -45,13 +46,19 @@ export default class List extends Component {
         Navigation.set(this, {
             title: 'Threads',
             buttons: [
-                { icon: 'user', id: 'logout' }
+                { icon: 'user', id: 'logout' },
+                { icon: 'add', id: 'newThread' },
             ]
         });
     }
 
     componentWillMount() {
         this.reload();
+    }
+    newThread(){
+        this.props.navigator.push({
+                      screen: 'ThreadCreate',
+                  });
     }
 
     logout() {
@@ -108,13 +115,6 @@ export default class List extends Component {
     render() {
         return (
             <Page>
-                <Button
-                  onPress={()=>this.props.navigator.push({
-                      screen: 'ThreadCreate',
-                      passProps: {}
-                  })}
-                  title="+Create Thread"
-                />
             <ListItem fill>
                 <Button
                         icon='filter'

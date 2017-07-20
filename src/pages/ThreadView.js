@@ -66,16 +66,17 @@ export default class View extends Component {
     async setVote(vote){
 
         var newThread = this.state.thread;
-        var user = await Utilities.storageGet('username');
-        console.log(user);
+        //var user = await Utilities.storageGet('username');
+        //console.log(user);
         console.log(newThread);
         var voteFound;
     if(vote){
         if(!newThread.Votes){
             newThread.Votes = [];
             newThread.Votes.push({
-                User: user,
-                VoteUp: vote
+                User: global.userLogin,
+                VoteUp: vote,
+                UserOrg: global.userOrgName,
             });
         }
     }
@@ -83,7 +84,7 @@ export default class View extends Component {
 
         if(newThread.Votes){
             for(i =0; i<newThread.Votes.length;i++){
-                if (newThread.Votes[i].User == user){
+                if (newThread.Votes[i].User == global.userLogin){
                     voteFound = true;
                     if(vote){
                         newThread.Votes[i].VoteUp = vote;
@@ -98,8 +99,9 @@ export default class View extends Component {
         if(vote){    
             if(!voteFound){
                 newThread.Votes.push({
-                    User: user,
-                    VoteUp: vote
+                    User: global.userLogin,
+                    VoteUp: vote,
+                    UserOrg: global.userOrgName,
                     });
                 }   
             }
@@ -128,8 +130,7 @@ export default class View extends Component {
                     /> 
 
                     <Button icon='down-arrow'
-                            
-                            onPress={() => this.setVote('false')}
+                             onPress={() => this.setVote('false')}
                     />        
                 </Card>
 
