@@ -44,18 +44,28 @@ export default class ThreadCreate extends Component {
   }
 
   async makeThread(){
-    this.setState({loading: true});
     var thread = {
       type: '$CCThreadT1',
-      title: this.state.title
+      Date: new Date(),
+      Title: this.state.title,
+      licensee: {
+				'memberId': '5717989018004281',
+			}
     }
     var postedThread = await AppX.create(thread);
+    /**
     var body = {
       type: '$CCCommentT1',
       Body: this.state.body,
-      Parent: postedThread.uid
+      Parent: {
+				reference: 'Thread',
+				rootType: '$CCThreadT1',
+				rootId: postedThread.uid,
+				externalType: '$CCThreadT1',
+			}
     }
-    this.setState({loading: false});
+    this.props.navigator.pop();
+  */
   }
 
   render() {
@@ -82,7 +92,7 @@ export default class ThreadCreate extends Component {
             rows={7}
           />
           <Button
-            onPress={()=>this.makeThread}
+            onPress={()=>this.makeThread()}
             title="Create New Thread"
           />
         </Page>
