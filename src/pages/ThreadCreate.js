@@ -22,7 +22,7 @@ import {
     Navigation,
     Tag,
     Button
-} from '../soho/All';
+} from 'gtn-soho';
 
 export default class ThreadCreate extends Component {
 
@@ -53,6 +53,7 @@ export default class ThreadCreate extends Component {
 			}
     }
     var postedThread = await AppX.create(thread);
+    console.log(postedThread);
     /**
     var body = {
       type: '$CCCommentT1',
