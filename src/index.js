@@ -11,6 +11,7 @@ Navigation.registerComponent('Settings', () => require('./pages/Settings').defau
 Navigation.registerComponent('ThreadList', () => require('./pages/ThreadList').default);
 Navigation.registerComponent('ThreadView', () => require('./pages/ThreadView').default);
 Navigation.registerComponent('FilterThreads', () => require ('./pages/FilterThreads').default);
+Navigation.registerComponent('CreateComment', () => require ('./pages/CreateComment').default);
 
 Navigation.startSingleScreenApp({
     screen: {

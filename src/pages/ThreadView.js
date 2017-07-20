@@ -12,7 +12,8 @@ import {
     ComplexText,
     Field,
     ListItem,
-    Navigation
+    Navigation,
+    Button
 } from '../soho/All';
 
 import {
@@ -70,6 +71,20 @@ export default class View extends Component {
                 </Card>
 
                 <Card title='Comments'>
+                <ListItem fill>
+                        <Button
+                            icon='mingle-share'
+                            title='New Comment'
+
+                            onPress={() => this.props.navigator.push({
+                                screen: 'CreateComment',
+                                passProps: {
+                                    id: this.props.uid, reload: () => this.reload()
+                                }
+                            })}
+
+                        />
+                    </ListItem>
                     <FlatList
                         data={this.state.comments}
                         keyExtractor={item => item.uid}
