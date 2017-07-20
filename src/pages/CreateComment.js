@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import {
 	AppX
-} from '../gtn/All';
+} from 'gtn-platform';
 
 import {
 	Button,

@@ -15,7 +15,7 @@ import {
 import {
     AppX,
     Utilities
-} from '../gtn/All';
+} from 'gtn-platform';
 
 export default class FilterThreads extends Component {
 

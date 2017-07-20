@@ -12,7 +12,7 @@ import {
 import {
 	AppX,
 	Utilities
-} from '../gtn/All';
+} from 'gtn-platform';
 
 import Environments from '../Environments';
 

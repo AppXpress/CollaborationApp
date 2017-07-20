@@ -20,7 +20,7 @@ import {
 import {
     AppX,
     Utilities
-} from '../gtn/All';
+} from 'gtn-platform';
 
 export default class List extends Component {
 
