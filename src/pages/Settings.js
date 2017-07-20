@@ -14,7 +14,7 @@ import {
 	Utilities
 } from '../gtn/All';
 
-import Environments from '../gtn/Environments';
+import Environments from '../Environments';
 
 /**
  * Page component for choosing settings, such as global object and environment
