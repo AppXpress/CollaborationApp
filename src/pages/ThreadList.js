@@ -98,10 +98,11 @@ export default class List extends Component {
         return (
             <Page>
                 <Button
-                  onPress={() => alert("test")}
+                  onPress={()=>this.props.navigator.push({
+                      screen: 'ThreadCreate',
+                      passProps: {}
+                  })}
                   title="+Create Thread"
-                  color="#841584"
-                  accessibilityLabel="Learn more about this purple button"
                 />
                 <FlatList
                     data={this.state.threads}
