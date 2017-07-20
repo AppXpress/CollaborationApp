@@ -53,18 +53,25 @@ export default class ThreadCreate extends Component {
 			}
     }
     var postedThread = await AppX.create(thread);
+    var newUID = postedThread.data.create.result.uid;
     var body = {
       type: '$CCCommentT1',
       Body: this.state.body,
       Parent: {
 				reference: 'Thread',
 				rootType: '$CCThreadT1',
-				rootId: postedThread.data.create.result.uid,
+				rootId: newUID,
 				externalType: '$CCThreadT1',
 			}
     }
     await AppX.create(body);
     this.props.navigator.pop();
+    this.props.navigator.push({
+        screen: 'ThreadView',
+        passProps: {
+            uid: newUID
+        }
+    });
   }
 
   render() {
