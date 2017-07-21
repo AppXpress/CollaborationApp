@@ -28,14 +28,7 @@ export default class List extends Component {
 
         this.state = {};
 
-        Navigation.set(this, {
-            title: 'Threads',
-            buttons: [
-                { icon: 'user', id: 'logout' },
-                { icon: 'add', id: 'createThread' },
-                { icon: 'refresh', id: 'reload' }
-            ]
-        });
+        Navigation.set(this, { title: 'Threads' });
     }
 
     willAppear() {
@@ -63,12 +56,13 @@ export default class List extends Component {
     }
 
     reload() {
-        this.setState({ threads: null });
+        this.setState({ refreshing: true });
 
         AppX.query('$CCThreadT1', (this.state.filter || '1=1') + ' order by createTimestamp desc').then(result => {
             if (result.data) {
                 this.setState({
-                    threads: result.data.result
+                    threads: result.data.result,
+                    refreshing: false
                 });
             }
         });
@@ -107,7 +101,7 @@ export default class List extends Component {
         return (
             <Page
                 onRefresh={() => this.reload()}
-                refreshing={!this.state.threads}
+                refreshing={this.state.refreshing}
             >
                 <ListItem fill>
                     <Button
@@ -124,6 +118,14 @@ export default class List extends Component {
                     keyExtractor={item => item.uid}
                     renderItem={({ item }) => this.renderThread(item)}
                 />
+                {!this.state.threads &&
+                    <ListItem>
+                        <ComplexText
+                            main='No threads found'
+                            secondary='Try refreshing or chaning the filter!'
+                        />
+                    </ListItem>
+                }
             </Page>
         );
     }

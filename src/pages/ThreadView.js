@@ -48,13 +48,13 @@ export default class View extends Component {
 
     reload() {
         this.setState({
-            loading: true
+            refreshing: true
         });
 
         AppX.fetch('$CCThreadT1', this.props.uid).then(result => {
             this.setState({
                 thread: result.data,
-                loading: false
+                refreshing: false
             });
         });
 
@@ -74,19 +74,9 @@ export default class View extends Component {
         });
     }
 
-    renderComment(item) {
-        return (
-            <ListItem onPress={() => this.viewComment(item)} >
-                <ComplexText
-                    main={item.Body}
-                    secondary={item.Date}
-                    tertiary={item.Author + ' of ' + item.AuthorOrg}
-                />
-            </ListItem>
-        );
-    }
+    toggleVote(vote) {
+        this.setState({ refreshing: true });
 
-    async toggleVote(vote) {
         let votes = this.state.thread.Votes || [];
         votes = votes.filter(vote => vote.User != global.userLogin);
 
@@ -99,16 +89,29 @@ export default class View extends Component {
         }
 
         this.state.thread.Votes = votes;
-        this.setState({ loading: true });
-        await AppX.persist(this.state.thread);
-        this.setState({ loading: false });
+
+        AppX.persist(this.state.thread).then(result => {
+            this.setState({ refreshing: false });
+        });
+    }
+
+    renderComment(item) {
+        return (
+            <ListItem onPress={() => this.viewComment(item)} >
+                <ComplexText
+                    main={item.Body}
+                    secondary={item.Date}
+                    tertiary={item.Author + ' of ' + item.AuthorOrg}
+                />
+            </ListItem>
+        );
     }
 
     render() {
         return (
             <Page
-                refreshing={this.state.loading}
                 onRefresh={() => this.reload()}
+                refreshing={this.state.refreshing}
             >
                 <Card>
                     <Field label='Title' entry={this.state.thread.Title} />
@@ -132,7 +135,6 @@ export default class View extends Component {
                         <Button
                             icon='mingle-share'
                             title='New Comment'
-
                             onPress={() => this.props.navigator.push({
                                 screen: 'CreateComment',
                                 passProps: {
@@ -146,8 +148,13 @@ export default class View extends Component {
                         keyExtractor={item => item.uid}
                         renderItem={({ item }) => this.renderComment(item)}
                     />
-                    {!this.state.comments &&
-                        <Loading />
+                    {this.state.comments && this.state.comments.length == 0 &&
+                        <ListItem>
+                            <ComplexText
+                                main='No comments'
+                                secondary='Go ahead and make one!'
+                            />
+                        </ListItem>
                     }
                 </Card>
             </Page>
