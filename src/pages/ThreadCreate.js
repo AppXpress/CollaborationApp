@@ -3,8 +3,7 @@ import React, {
 } from 'react';
 
 import {
-    AppX,
-    Utilities
+    AppX
 } from 'gtn-platform';
 
 import {

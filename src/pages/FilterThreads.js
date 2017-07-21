@@ -13,8 +13,7 @@ import {
 } from 'gtn-soho';
 
 import {
-    AppX,
-    Utilities
+    AppX
 } from 'gtn-platform';
 
 export default class FilterThreads extends Component {

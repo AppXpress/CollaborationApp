@@ -19,8 +19,7 @@ import {
 } from 'gtn-soho';
 
 import {
-    AppX,
-    Utilities
+    AppX
 } from 'gtn-platform';
 
 export default class View extends Component {

@@ -2,11 +2,6 @@ import {
 	AsyncStorage
 } from 'react-native';
 
-import {
-	storageGet,
-	storageSet
-} from './Utilities';
-
 import base64 from 'base-64';
 
 import RNFetchBlob from 'react-native-fetch-blob'

@@ -18,8 +18,7 @@ import {
 } from 'gtn-soho';
 
 import {
-    AppX,
-    Utilities
+    AppX
 } from 'gtn-platform';
 
 export default class List extends Component {
@@ -34,7 +33,7 @@ export default class List extends Component {
         Navigation.set(this, {
             title: 'Threads',
             buttons: [
-                { icon: 'user', id: 'logout' }, 
+                { icon: 'user', id: 'logout' },
                 { icon: 'add', id: 'newThread' },
             ]
         });
@@ -55,10 +54,10 @@ export default class List extends Component {
     componentWillMount() {
         this.reload();
     }
-    newThread(){
+    newThread() {
         this.props.navigator.push({
-                      screen: 'ThreadCreate',
-                  });
+            screen: 'ThreadCreate',
+        });
     }
 
     logout() {
@@ -115,8 +114,8 @@ export default class List extends Component {
     render() {
         return (
             <Page>
-            <ListItem fill>
-                <Button
+                <ListItem fill>
+                    <Button
                         icon='filter'
                         title='Filter'
                         onPress={() => this.props.navigator.push({

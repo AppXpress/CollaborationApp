@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import {
+	AsyncStorage,
 	View
 } from 'react-native';
 
@@ -16,8 +17,7 @@ import {
 } from 'gtn-soho';
 
 import {
-	AppX,
-	Utilities
+	AppX
 } from 'gtn-platform';
 
 import Environments from '../Environments';
@@ -69,8 +69,8 @@ export default class Login extends Component {
 	}
 
 	async getCredentials() {
-		var username = await Utilities.storageGet('username');
-		var password = await Utilities.storageGet('password');
+		var username = await AsyncStorage.getItem('username');
+		var password = await AsyncStorage.getItem('password');
 		if (username) {
 			this.setState({
 				save: true,
@@ -80,13 +80,13 @@ export default class Login extends Component {
 		}
 	}
 
-	async setUserData(){
+	async setUserData() {
 		var userinfo;
-		await AppX.fetch('User','self').then(async result => {
+		await AppX.fetch('User', 'self').then(async result => {
 			var info = result.data;
 			global.userLogin = info.login;
 
-			await AppX.fetch('OrganizationDetail', info.organizationUid).then(result =>{
+			await AppX.fetch('OrganizationDetail', info.organizationUid).then(result => {
 				console.log(result.data.name);
 				global.userOrgName = result.data.name;
 			});
@@ -95,19 +95,18 @@ export default class Login extends Component {
 	}
 
 	async setCredentials() {
-		
 		if (this.state.save) {
-			await Utilities.storageSet('username', this.state.username);
-			await Utilities.storageSet('password', this.state.password);
+			await AsyncStorage.setItem('username', this.state.username);
+			await AsyncStorage.setItem('password', this.state.password);
 		}
 		else {
-			await Utilities.storageSet('username', '');
-			await Utilities.storageSet('password', '');
+			await AsyncStorage.setItem('username', '');
+			await AsyncStorage.setItem('password', '');
 		}
 	}
 
 	async loadEnvironment() {
-		this.environment = JSON.parse(await Utilities.storageGet('environment'));
+		this.environment = JSON.parse(await AsyncStorage.getItem('environment'));
 		if (!this.environment) {
 			this.environment = Environments[0];
 		}
@@ -123,7 +122,7 @@ export default class Login extends Component {
 		this.setState({ loading: true });
 
 		var appx = await AppX.login(this.state.username, this.state.password, this.state.eid, this.environment);
-		
+
 		this.setUserData();
 		this.setState({ loading: false });
 		if (appx.data) {

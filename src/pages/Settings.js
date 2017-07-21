@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 import {
+	AsyncStorage
+} from 'react-native';
+
+import {
 	Button,
 	Card,
 	Navigation,
@@ -10,8 +14,7 @@ import {
 } from 'gtn-soho';
 
 import {
-	AppX,
-	Utilities
+	AppX
 } from 'gtn-platform';
 
 import Environments from '../Environments';
@@ -32,7 +35,7 @@ export default class Settings extends Component {
 	}
 
 	async componentDidMount() {
-		var env = JSON.parse(await Utilities.storageGet('environment'));
+		var env = JSON.parse(await AsyncStorage.getItem('environment'));
 		if (!env) {
 			env = Environments[0];
 		}
@@ -46,7 +49,7 @@ export default class Settings extends Component {
 	}
 
 	async saveSettings() {
-		await Utilities.storageSet('environment', JSON.stringify({
+		await AsyncStorage.setItem('environment', JSON.stringify({
 			url: this.state.url,
 			key: this.state.key,
 			issue: this.state.issue,
