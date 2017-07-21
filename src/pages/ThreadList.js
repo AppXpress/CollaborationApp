@@ -105,7 +105,10 @@ export default class List extends Component {
 
     render() {
         return (
-            <Page fill>
+            <Page
+                onRefresh={() => this.reload()}
+                refreshing={!this.state.threads}
+            >
                 <ListItem fill>
                     <Button
                         icon='filter'
@@ -120,8 +123,6 @@ export default class List extends Component {
                     data={this.state.threads}
                     keyExtractor={item => item.uid}
                     renderItem={({ item }) => this.renderThread(item)}
-                    onRefresh={() => this.reload()}
-                    refreshing={!this.state.threads}
                 />
             </Page>
         );

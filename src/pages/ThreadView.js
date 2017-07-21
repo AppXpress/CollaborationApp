@@ -27,12 +27,16 @@ export default class View extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            thread: {}
+        };
 
         Navigation.set(this, {
             title: 'Thread'
         });
+    }
 
+    componentWillMount() {
         this.reload();
     }
 
@@ -43,9 +47,14 @@ export default class View extends Component {
     }
 
     reload() {
+        this.setState({
+            loading: true
+        });
+
         AppX.fetch('$CCThreadT1', this.props.uid).then(result => {
             this.setState({
-                thread: result.data
+                thread: result.data,
+                loading: false
             });
         });
 
@@ -55,6 +64,7 @@ export default class View extends Component {
             });
         });
     }
+
     viewComment(item) {
         this.props.navigator.push({
             screen: 'CommentView',
@@ -96,30 +106,26 @@ export default class View extends Component {
 
     render() {
         return (
-            <Page>
-                {this.state.thread &&
-                    <Card>
-                        <Field label='Title' entry={this.state.thread.Title} />
-                        <Field label='Score' entry={this.state.thread.Score} />
-                        <Tag.List>
-                            <Button
-                                icon='up-arrow'
-                                onPress={() => this.toggleVote(true)}
-                                hue={this.canVote(true) ? 'graphite' : 'emerald'}
-                            />
-                            <Button
-                                icon='down-arrow'
-                                onPress={() => this.toggleVote(false)}
-                                hue={this.canVote(false) ? 'graphite' : 'ruby'}
-                            />
-                        </Tag.List>
-                    </Card>
-                }
-                {!this.state.thread &&
-                    <Card>
-                        <Loading />
-                    </Card>
-                }
+            <Page
+                refreshing={this.state.loading}
+                onRefresh={() => this.reload()}
+            >
+                <Card>
+                    <Field label='Title' entry={this.state.thread.Title} />
+                    <Field label='Score' entry={this.state.thread.Score} />
+                    <Tag.List>
+                        <Button
+                            icon='up-arrow'
+                            onPress={() => this.toggleVote(true)}
+                            hue={this.canVote(true) ? 'graphite' : 'emerald'}
+                        />
+                        <Button
+                            icon='down-arrow'
+                            onPress={() => this.toggleVote(false)}
+                            hue={this.canVote(false) ? 'graphite' : 'ruby'}
+                        />
+                    </Tag.List>
+                </Card>
 
                 <Card title='Comments'>
                     <ListItem fill>
@@ -144,10 +150,6 @@ export default class View extends Component {
                         <Loading />
                     }
                 </Card>
-
-                {this.state.loading &&
-                    <Loading block />
-                }
             </Page>
         );
     }
