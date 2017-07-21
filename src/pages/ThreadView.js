@@ -55,10 +55,18 @@ export default class View extends Component {
             });
         });
     }
+    viewComment(item) {
+        this.props.navigator.push({
+            screen: 'CommentView',
+            passProps: {
+                uid: item.uid
+            }
+        });
+    }
 
     renderComment(item) {
         return (
-            <ListItem>
+            <ListItem onPress={() => this.viewComment(item)} >
                 <ComplexText
                     main={item.Body}
                     secondary={item.Date}

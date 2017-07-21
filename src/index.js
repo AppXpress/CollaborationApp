@@ -13,6 +13,7 @@ Navigation.registerComponent('ThreadView', () => require('./pages/ThreadView').d
 Navigation.registerComponent('ThreadCreate', () => require('./pages/ThreadCreate').default);
 Navigation.registerComponent('FilterThreads', () => require ('./pages/FilterThreads').default);
 Navigation.registerComponent('CreateComment', () => require ('./pages/CreateComment').default);
+Navigation.registerComponent('CommentView', () => require ('./pages/CommentView').default);
 
 Navigation.startSingleScreenApp({
     screen: {
