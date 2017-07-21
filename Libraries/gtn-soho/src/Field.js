@@ -38,8 +38,6 @@ export default class Field extends Component {
 
 	constructor(props) {
 		super(props);
-
-		this.props = props;
 	}
 
 	/**

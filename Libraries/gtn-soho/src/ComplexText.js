@@ -16,8 +16,6 @@ import {
 export default class ComplexText extends Component {
     constructor(props) {
         super(props);
-
-        this.props = props;
     }
 
     /**

@@ -19,8 +19,6 @@ import {
 export default class Touchable extends Component {
 	constructor(props) {
 		super(props);
-
-		this.props = props;
 	}
 
 	/**

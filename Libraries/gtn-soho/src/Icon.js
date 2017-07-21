@@ -36,7 +36,6 @@ export default class Icon extends Component {
     constructor(props) {
         super(props);
 
-        this.props = props;
         this.state = {
             icon: Icon.getChar(this.props.name)
         }

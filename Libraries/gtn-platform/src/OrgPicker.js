@@ -22,7 +22,6 @@ export default class OrgPicker extends Component {
 	constructor(props) {
 		super(props);
 
-		this.props = props;
 		this.state = {
 			value: this.props.selectedValue,
 			orgs: []

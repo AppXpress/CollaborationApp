@@ -18,9 +18,6 @@ import {
 export default class TextInput extends Component {
 	constructor(props) {
 		super(props);
-
-		this.props = props;
-		this.state = {};
 	}
 
 	/**

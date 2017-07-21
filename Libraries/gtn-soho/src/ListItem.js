@@ -19,8 +19,6 @@ import {
 export default class ListItem extends Component {
     constructor(props) {
         super(props);
-
-        this.props = props;
     }
 
     /**

@@ -31,17 +31,13 @@ export default class Picker extends Component {
 	/**
 	 * Helper component for listing picker items
 	 */
-	static Item = (props) => {
-		this.props = props;
-	}
+	static Item = (props) => { }
 
 	constructor(props) {
 		super(props);
 
-		this.props = props;
 		this.state = {
-			value: this.props.selectedValue,
-			visible: false
+			value: this.props.selectedValue
 		}
 	}
 
