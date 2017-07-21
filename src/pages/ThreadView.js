@@ -39,28 +39,17 @@ export default class View extends Component {
         this.reload();
     }
 
-    checkVote() {
-        for (i = 0; i < this.state.thread.Votes.length; i++) {
-            if (this.state.thread.Votes[i].User == global.userLogin) {
-                if (this.state.thread.Votes[i].VoteUp == 'true') {
-                    this.setState({ upVoteDisabled: true });
-                    return;
-                }
-                if (this.state.thread.Votes[i].VoteUp == 'false') {
-                    this.setState([{ downVoteDisabled: true }]);
-                    return;
-                }
-            }
-        }
+    canVote(vote) {
+        let votes = this.state.thread.Votes || [];
+        let current = votes.find(vote => vote.User == global.userLogin);
+        return current ? current.VoteUp != vote.toString() : true;
     }
 
     reload() {
-
         AppX.fetch('$CCThreadT1', this.props.uid).then(result => {
             this.setState({
                 thread: result.data
             });
-            this.checkVote();
         });
 
 
@@ -98,8 +87,6 @@ export default class View extends Component {
         this.state.thread.Votes = votes;
         await AppX.persist(this.state.thread);
         this.setState({});
-
-        console.log(this.state.thread);
     }
 
 
@@ -111,6 +98,7 @@ export default class View extends Component {
                     <Field label='Score' entry={this.state.thread.Score} />
                     <Button icon='up-arrow'
                         onPress={() => this.setVote(true)}
+                        disabled={!this.canVote(true)}
                     />
 
                     <Button icon='reset'
@@ -120,6 +108,7 @@ export default class View extends Component {
 
                     <Button icon='down-arrow'
                         onPress={() => this.setVote(false)}
+                        disabled={!this.canVote(false)}
                     />
                 </Card>
 
