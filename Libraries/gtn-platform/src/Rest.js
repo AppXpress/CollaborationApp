@@ -4,9 +4,10 @@ import {
 
 import {
 	storageGet,
-	storageSet,
-	base64Encode
+	storageSet
 } from './Utilities';
+
+import base64 from 'base-64';
 
 import RNFetchBlob from 'react-native-fetch-blob'
 
@@ -161,7 +162,7 @@ export default class Rest {
 			if (eid) {
 				auth += ':' + eid;
 			}
-			Rest._credentials = base64Encode(auth);
+			Rest._credentials = base64.encode(auth);
 		}
 
 		this._auth = true;

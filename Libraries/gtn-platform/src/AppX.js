@@ -3,7 +3,6 @@ import {
 } from 'react-native';
 
 import Rest from './Rest';
-import { base64Encode } from './Utilities';
 
 /**
  * Storage for the environment names of objects
