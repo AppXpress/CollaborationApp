@@ -26,9 +26,7 @@ export default class List extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            filter: ''
-        };
+        this.state = {};
 
         Navigation.set(this, {
             title: 'Threads',
@@ -38,17 +36,14 @@ export default class List extends Component {
                 { icon: 'refresh', id: 'reload' }
             ]
         });
-
-        this.reload();
     }
 
     willAppear() {
         Navigation.set(this, {
             title: 'Threads',
             buttons: [
-                { icon: 'user', id: 'logout' },
                 { icon: 'add', id: 'createThread' },
-                { icon: 'refresh', id: 'reload' }
+                { icon: 'user', id: 'logout' }
             ]
         });
     }
@@ -67,14 +62,16 @@ export default class List extends Component {
         this.props.navigator.resetTo({ screen: 'Login' });
     }
 
-    async reload() {
-        let result = await AppX.query('$CCThreadT1', (this.state.filter || '1=1') + ' order by createTimestamp desc');
+    reload() {
+        this.setState({ threads: null });
 
-        if (result.data) {
-            this.setState({
-                threads: result.data.result
-            });
-        }
+        AppX.query('$CCThreadT1', (this.state.filter || '1=1') + ' order by createTimestamp desc').then(result => {
+            if (result.data) {
+                this.setState({
+                    threads: result.data.result
+                });
+            }
+        });
     }
 
     setFilter(query) {
@@ -100,15 +97,7 @@ export default class List extends Component {
                     tertiary={item.Author + ' of ' + item.AuthorOrg}
                 />
                 <Tag.List>
-                    <Tag alert={(() => {
-                        if (item.Score < -2) {
-                            return '1';
-                        } else if (item.Score < 2) {
-                            return '2';
-                        } else {
-                            return '4';
-                        }
-                    })()}>{'Score: ' + item.Score}</Tag>
+                    <Tag>{'Score: ' + item.Score}</Tag>
                 </Tag.List>
             </ListItem >
         );
@@ -116,7 +105,7 @@ export default class List extends Component {
 
     render() {
         return (
-            <Page>
+            <Page fill>
                 <ListItem fill>
                     <Button
                         icon='filter'
@@ -131,12 +120,9 @@ export default class List extends Component {
                     data={this.state.threads}
                     keyExtractor={item => item.uid}
                     renderItem={({ item }) => this.renderThread(item)}
-                    refreshing={this.state.loading}
+                    onRefresh={() => this.reload()}
+                    refreshing={!this.state.threads}
                 />
-
-                {this.state.loading &&
-                    <Loading />
-                }
             </Page>
         );
     }

@@ -20,39 +20,7 @@ export default class TextInput extends Component {
 		super(props);
 
 		this.props = props;
-		this.state = {
-			leftEmpty: false,
-			text: ''
-		}
-	}
-
-	componentWillReceiveProps(next) {
-		this.setState({ text: next.value });
-	}
-
-	/**
-	 * Gets the error text for the field
-	 */
-	getError() {
-		if (this.props.required) {
-			if (this.state.blurred && !this.state.text) {
-				return (
-					<Text style={styles.error}>This field is required</Text>
-				);
-			}
-		}
-	}
-
-	onChangeText(text) {
-		this.setState({ text: text });
-	}
-
-	onFocus() {
-		this.setState({ blurred: false });
-	}
-
-	onBlur() {
-		this.setState({ blurred: true });
+		this.state = {};
 	}
 
 	/**
@@ -61,7 +29,7 @@ export default class TextInput extends Component {
 	getTextStyle() {
 		var style = {};
 
-		if (this.props.editable == false) {
+		if (this.props.disabled) {
 			style.backgroundColor = getColor('graphite-2');
 		}
 
@@ -87,27 +55,16 @@ export default class TextInput extends Component {
 	render() {
 		return (
 			<View style={styles.view}>
-				{this.props.label &&
-					<Text style={styles.label}>
-						{this.props.label}
-						{this.props.required && (
-							<Text style={styles.error}>*</Text>
-						)}
-					</Text>
-				}
+				<Text style={styles.label}>
+					{this.props.label}
+				</Text>
 
 				<TextInputBase
 					autoCapitalize='sentences'
 					{...this.props}
 					style={this.getTextStyle()}
 					underlineColorAndroid='transparent'
-					onFocus={getHandler(this, 'onFocus')}
-					onBlur={getHandler(this, 'onBlur')}
-					onChangeText={getHandler(this, 'onChangeText')}
-					value={this.props.value}
 				/>
-
-				{this.getError()}
 			</View>
 		);
 	}
@@ -131,8 +88,5 @@ const styles = StyleSheet.create({
 		borderColor: getColor('graphite-4'),
 		fontSize: 14,
 		color: getColor('graphite-10')
-	},
-	error: {
-		color: getColor('alert-1')
 	}
 });

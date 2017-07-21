@@ -151,14 +151,12 @@ export default class Login extends Component {
 						onChangeText={(text) => this.setState({ username: text })}
 						autoCapitalize='none'
 						autoFocus={true}
-						required
 					/>
 					<TextInput
 						label='Password'
 						value={this.state.password}
 						onChangeText={(text) => this.setState({ password: text })}
 						secureTextEntry={true}
-						required
 					/>
 					<TextInput
 						label='EID'
@@ -179,7 +177,7 @@ export default class Login extends Component {
 					<Button
 						title='Login'
 						onPress={this.login.bind(this)}
-						disabled={this.state.loading || !this.state.username || !this.state.password}
+						disabled={!this.state.username || !this.state.password}
 						primary
 					/>
 					{this.state.loading &&
