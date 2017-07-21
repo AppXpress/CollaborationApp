@@ -13,7 +13,9 @@ import {
     Field,
     ListItem,
     Navigation,
-    Button
+    Button,
+    Loading,
+    Tag
 } from 'gtn-soho';
 
 import {
@@ -26,11 +28,7 @@ export default class View extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            thread: {},
-            upVoteDisabled: false,
-            downVoteDisabled: false,
-        };
+        this.state = {};
 
         Navigation.set(this, {
             title: 'Thread'
@@ -52,7 +50,6 @@ export default class View extends Component {
             });
         });
 
-
         AppX.query('$CCCommentT1', `Parent.rootId = ${this.props.uid}`).then(result => {
             this.setState({
                 comments: result.data.result
@@ -72,11 +69,11 @@ export default class View extends Component {
         );
     }
 
-    async setVote(vote) {
+    async toggleVote(vote) {
         let votes = this.state.thread.Votes || [];
         votes = votes.filter(vote => vote.User != global.userLogin);
 
-        if (vote != null) {
+        if (this.canVote(vote)) {
             votes.push({
                 User: global.userLogin,
                 UserOrg: global.userOrgName,
@@ -85,32 +82,37 @@ export default class View extends Component {
         }
 
         this.state.thread.Votes = votes;
+        this.setState({ loading: true });
         await AppX.persist(this.state.thread);
-        this.setState({});
+        this.setState({ loading: false });
     }
-
 
     render() {
         return (
             <Page>
-                <Card>
-                    <Field label='Title' entry={this.state.thread.Title} />
-                    <Field label='Score' entry={this.state.thread.Score} />
-                    <Button icon='up-arrow'
-                        onPress={() => this.setVote(true)}
-                        disabled={!this.canVote(true)}
-                    />
-
-                    <Button icon='reset'
-
-                        onPress={() => this.setVote(null)}
-                    />
-
-                    <Button icon='down-arrow'
-                        onPress={() => this.setVote(false)}
-                        disabled={!this.canVote(false)}
-                    />
-                </Card>
+                {this.state.thread &&
+                    <Card>
+                        <Field label='Title' entry={this.state.thread.Title} />
+                        <Field label='Score' entry={this.state.thread.Score} />
+                        <Tag.List>
+                            <Button
+                                icon='up-arrow'
+                                onPress={() => this.toggleVote(true)}
+                                hue={this.canVote(true) ? 'graphite' : 'emerald'}
+                            />
+                            <Button
+                                icon='down-arrow'
+                                onPress={() => this.toggleVote(false)}
+                                hue={this.canVote(false) ? 'graphite' : 'ruby'}
+                            />
+                        </Tag.List>
+                    </Card>
+                }
+                {!this.state.thread &&
+                    <Card>
+                        <Loading />
+                    </Card>
+                }
 
                 <Card title='Comments'>
                     <ListItem fill>
@@ -124,20 +126,21 @@ export default class View extends Component {
                                     id: this.props.uid, reload: () => this.reload()
                                 }
                             })}
-
                         />
                     </ListItem>
                     <FlatList
                         data={this.state.comments}
                         keyExtractor={item => item.uid}
                         renderItem={({ item }) => this.renderComment(item)}
-                        refreshing={this.state.loading}
                     />
-
-                    {this.state.loading &&
+                    {!this.state.comments &&
                         <Loading />
                     }
                 </Card>
+
+                {this.state.loading &&
+                    <Loading block />
+                }
             </Page>
         );
     }
