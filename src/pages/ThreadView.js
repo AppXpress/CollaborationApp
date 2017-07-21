@@ -51,7 +51,7 @@ export default class View extends Component {
 
         AppX.query('$CCCommentT1', `Parent.rootId = ${this.props.uid}`).then(result => {
             this.setState({
-                comments: result.data.result
+                comments: result.data.result || []
             });
         });
     }

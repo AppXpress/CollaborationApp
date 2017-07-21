@@ -34,50 +34,44 @@ export default class ThreadCreate extends Component {
         };
 
         Navigation.set(this, {
-            title: 'New Thread',
-            buttons: [
-                { icon: 'user', id: 'logout' }
-            ]
+            title: 'New Thread'
         });
     }
 
-    async makeThread() {
+    async createThread() {
         this.setState({ loading: true });
-        var thread = {
+
+        let result = await AppX.create({
             type: '$CCThreadT1',
-            Date: new Date(),
-            Title: this.state.title,
-            licensee: {
-                'memberId': '5717989018004281',
-            }
-        }
-        var postedThread = await AppX.create(thread);
-        if (!postedThread.data) {
+            Title: this.state.title
+        });
+
+        if (!result.data) {
             alert('We were\'nt able to create your thread. Please try again later.');
+            return;
         }
 
-        var newUID = postedThread.data.create.result.uid;
-        var body = {
+        let thread = result.data.create.result;
+        result = await AppX.create({
             type: '$CCCommentT1',
             Body: this.state.body,
             Parent: {
                 reference: 'Thread',
                 rootType: '$CCThreadT1',
-                rootId: newUID,
-                externalType: '$CCThreadT1',
+                rootId: thread.uid
             }
-        }
-        var postedThreadBody = await AppX.create(body);
-        if (!postedThreadBody.data) {
-            alert('We were\'nt able to create your thread. Please try again later.');
-        }
+        });
 
+        if (!result.data) {
+            alert('We were\'nt able to create your thread. Please try again later.');
+            return;
+        }
 
         this.props.navigator.pop();
         this.props.navigator.push({
             screen: 'ThreadView',
             passProps: {
-                uid: newUID
+                uid: thread.uid
             }
         });
     }
@@ -87,27 +81,24 @@ export default class ThreadCreate extends Component {
             <Page>
                 <Card>
                     <TextInput
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                        label="Thread title"
+                        label="Title"
                         onChangeText={(text) => this.setState({ title: text })}
                         value={this.state.title}
                     />
                     <TextInput
-                        style={{ height: 200, borderColor: 'gray', borderWidth: 1 }}
-                        label="Thread body"
+                        label="Message"
                         onChangeText={(text) => this.setState({ body: text })}
                         value={this.state.body}
                         multiline
                         rows={7}
                     />
                     <Button
-                        onPress={() => this.makeThread()}
-                        title="Create New Thread"
+                        onPress={() => this.createThread()}
+                        title="Submit"
+                        primary
                     />
                 </Card>
             </Page>
         );
     }
-
-
 }

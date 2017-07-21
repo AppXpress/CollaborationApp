@@ -34,7 +34,8 @@ export default class List extends Component {
             title: 'Threads',
             buttons: [
                 { icon: 'user', id: 'logout' },
-                { icon: 'add', id: 'newThread' },
+                { icon: 'add', id: 'createThread' },
+                { icon: 'refresh', id: 'reload' }
             ]
         });
 
@@ -46,7 +47,8 @@ export default class List extends Component {
             title: 'Threads',
             buttons: [
                 { icon: 'user', id: 'logout' },
-                { icon: 'add', id: 'newThread' },
+                { icon: 'add', id: 'createThread' },
+                { icon: 'refresh', id: 'reload' }
             ]
         });
     }
@@ -54,7 +56,8 @@ export default class List extends Component {
     componentWillMount() {
         this.reload();
     }
-    newThread() {
+
+    createThread() {
         this.props.navigator.push({
             screen: 'ThreadCreate',
         });
@@ -65,7 +68,7 @@ export default class List extends Component {
     }
 
     async reload() {
-        let result = await AppX.query('$CCThreadT1', this.state.filter);
+        let result = await AppX.query('$CCThreadT1', (this.state.filter || '1=1') + ' order by createTimestamp desc');
 
         if (result.data) {
             this.setState({
