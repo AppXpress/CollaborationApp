@@ -27,7 +27,9 @@ export default class View extends Component {
         super(props);
 
         this.state = {
-            thread: {}
+            thread: {},
+            upVoteDisabled: false,
+            downVoteDisabled: false,
         };
 
         Navigation.set(this, {
@@ -37,12 +39,30 @@ export default class View extends Component {
         this.reload();
     }
 
+    checkVote() {
+        for (i = 0; i < this.state.thread.Votes.length; i++) {
+            if (this.state.thread.Votes[i].User == global.userLogin) {
+                if (this.state.thread.Votes[i].VoteUp == 'true') {
+                    this.setState({ upVoteDisabled: true });
+                    return;
+                }
+                if (this.state.thread.Votes[i].VoteUp == 'false') {
+                    this.setState([{ downVoteDisabled: true }]);
+                    return;
+                }
+            }
+        }
+    }
+
     reload() {
+
         AppX.fetch('$CCThreadT1', this.props.uid).then(result => {
             this.setState({
                 thread: result.data
             });
+            this.checkVote();
         });
+
 
         AppX.query('$CCCommentT1', `Parent.rootId = ${this.props.uid}`).then(result => {
             this.setState({
@@ -90,7 +110,6 @@ export default class View extends Component {
                     <Field label='Title' entry={this.state.thread.Title} />
                     <Field label='Score' entry={this.state.thread.Score} />
                     <Button icon='up-arrow'
-
                         onPress={() => this.setVote(true)}
                     />
 
