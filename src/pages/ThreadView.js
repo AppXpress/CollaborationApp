@@ -19,7 +19,7 @@ import {
 import {
     AppX,
     Utilities
-} from '../gtn/All';
+} from 'gtn-platform';
 
 export default class View extends Component {
 
@@ -117,18 +117,18 @@ export default class View extends Component {
                     <Field label='Title' entry={this.state.thread.Title} />
                     <Field label='Score' entry={this.state.thread.Score} />
                     <Button icon='up-arrow'
-                            
-                            onPress={() => this.setVote('true')}
+
+                        onPress={() => this.setVote('true')}
                     />
 
                     <Button icon='reset'
-                            
-                            onPress={() => this.setVote(null)}
-                    /> 
+
+                        onPress={() => this.setVote(null)}
+                    />
 
                     <Button icon='down-arrow'
-                             onPress={() => this.setVote('false')}
-                    />        
+                        onPress={() => this.setVote('false')}
+                    />
                 </Card>
 
                 <Card title='Comments'>

@@ -12,9 +12,9 @@ import {
 import {
 	AppX,
 	Utilities
-} from '../gtn/All';
+} from 'gtn-platform';
 
-import Environments from '../gtn/Environments';
+import Environments from '../Environments';
 
 /**
  * Page component for choosing settings, such as global object and environment

@@ -1,0 +1,16 @@
+{
+  "name": "gtn-platform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "gtn-soho": "file:../gtn-soho",
+    "react-native-fetch-blob": "^0.10.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

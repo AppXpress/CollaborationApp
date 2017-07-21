@@ -3,7 +3,8 @@ import {
 } from 'react-native';
 
 import {
-    getColor
+    getColor,
+    parseCase
 } from '../helpers';
 
 import Icon from './Icon';
@@ -86,7 +87,7 @@ export function set(page, config) {
  */
 function getTitle(button, buttons) {
     if (Platform.OS == 'android' && buttons.length > 0) {
-        return Icon.getChar(button.icon) + '   ' + button.id.charAt(0).toUpperCase() + button.id.substring(1);
+        return Icon.getChar(button.icon) + '   ' + parseCase(button.id);
     } else {
         return Icon.getChar(button.icon);
     }

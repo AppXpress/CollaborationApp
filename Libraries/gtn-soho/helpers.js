@@ -15,6 +15,10 @@ export function getHandler(obj, name) {
 	}
 }
 
+export function parseCase(string) {
+	return string.charAt(0).toUpperCase() + string.substring(1).replace(/[A-Z]/g, ' $&');
+}
+
 /**
  * Gets a SoHo color by name
  * 

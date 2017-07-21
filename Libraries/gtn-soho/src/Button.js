@@ -61,7 +61,7 @@ export default class Button extends Component {
 		} else if (this.props.icon && !this.props.title) {
 			style.fontSize = 24;
 			style.fontWeight = 'normal';
-			style.color = getColor('white-0');
+			style.color = getColor(this.props.hue + '-7', 'graphite-7');
 		} else {
 			style.color = getColor(this.props.hue + '-6', 'graphite-6');
 		}

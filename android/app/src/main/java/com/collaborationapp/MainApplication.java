@@ -3,8 +3,8 @@ package com.collaborationapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
- import com.reactnativenavigation.NavigationApplication;
 import com.RNFetchBlob.RNFetchBlobPackage;
+ import com.reactnativenavigation.NavigationApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
