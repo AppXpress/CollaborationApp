@@ -122,7 +122,14 @@ export async function persist(data) {
 			.path(data.uid)
 			.post(JSON.stringify(data));
 
-		return { data: await response.json() };
+		var update = await response.json();
+
+		for (let prop in data) {
+			delete data[prop];
+		}
+		Object.assign(data, update.data);
+
+		return { data: data };
 	} catch (error) {
 		console.warn(error);
 		return { error: error };

@@ -63,50 +63,23 @@ export default class View extends Component {
         );
     }
 
-    async setVote(vote){
+    async setVote(vote) {
+        let votes = this.state.thread.Votes || [];
+        votes = votes.filter(vote => vote.User != global.userLogin);
 
-        var newThread = this.state.thread;
-        var voteFound;
-    if(vote){
-        if(!newThread.Votes){
-            newThread.Votes = [];
-            newThread.Votes.push({
+        if (vote != null) {
+            votes.push({
                 User: global.userLogin,
-                VoteUp: vote,
                 UserOrg: global.userOrgName,
+                VoteUp: vote.toString()
             });
         }
-    }
 
+        this.state.thread.Votes = votes;
+        await AppX.persist(this.state.thread);
+        this.setState({});
 
-        if(newThread.Votes){
-            for(i =0; i<newThread.Votes.length;i++){
-                if (newThread.Votes[i].User == global.userLogin){
-                    voteFound = true;
-                    if(vote){
-                        newThread.Votes[i].VoteUp = vote;
-                    }else{
-                        newThread.Votes.splice(i, 1);
-                    }
-                }
-                break;
-            }
-
-
-        if(vote){    
-            if(!voteFound){
-                newThread.Votes.push({
-                    User: global.userLogin,
-                    VoteUp: vote,
-                    UserOrg: global.userOrgName,
-                    });
-                }   
-            }
-        }
-
-
-        await AppX.persist(newThread);
-        this.reload();
+        console.log(this.state.thread);
     }
 
 
@@ -118,7 +91,7 @@ export default class View extends Component {
                     <Field label='Score' entry={this.state.thread.Score} />
                     <Button icon='up-arrow'
 
-                        onPress={() => this.setVote('true')}
+                        onPress={() => this.setVote(true)}
                     />
 
                     <Button icon='reset'
@@ -127,7 +100,7 @@ export default class View extends Component {
                     />
 
                     <Button icon='down-arrow'
-                        onPress={() => this.setVote('false')}
+                        onPress={() => this.setVote(false)}
                     />
                 </Card>
 
