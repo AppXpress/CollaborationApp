@@ -42,7 +42,7 @@ export default class ThreadCreate extends Component {
         this.setState({ loading: true });
 
         let result = await AppX.create({
-            type: '$CCThreadT1',
+            type: AppX.objects.thread,
             Title: this.state.title
         });
 
@@ -53,11 +53,11 @@ export default class ThreadCreate extends Component {
 
         let thread = result.data.create.result;
         result = await AppX.create({
-            type: '$CCCommentT1',
+            type: AppX.objects.comment,
             Body: this.state.body,
             Parent: {
                 reference: 'Thread',
-                rootType: '$CCThreadT1',
+                rootType: AppX.objects.thread,
                 rootId: thread.uid
             }
         });

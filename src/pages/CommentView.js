@@ -65,7 +65,7 @@ export default class View extends Component {
     }
 
     reload() {
-        AppX.fetch('$CCCommentT1', this.props.uid).then(result => {
+        AppX.fetch(AppX.objects.comment, this.props.uid).then(result => {
             
             this.setState({
                 comment: result.data
@@ -83,7 +83,7 @@ export default class View extends Component {
             }
         });
         
-        AppX.fetchAttachList('$CCCommentT1', this.props.uid).then(({ data }) => {
+        AppX.fetchAttachList(AppX.objects.comment, this.props.uid).then(({ data }) => {
             if (data) {
                 this.setState({ attachments: data.result || [] });
             } else {

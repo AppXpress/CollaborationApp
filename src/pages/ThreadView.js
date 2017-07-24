@@ -68,14 +68,14 @@ export default class View extends Component {
             refreshing: true
         });
 
-        AppX.fetch('$CCThreadT1', this.props.uid).then(result => {
+        AppX.fetch(AppX.objects.thread, this.props.uid).then(result => {
             this.setState({
                 thread: result.data,
                 refreshing: false
             });
         });
 
-        AppX.query('$CCCommentT1', `Parent.rootId = ${this.props.uid}`+' ORDER BY createTimestamp ASC').then(result => {
+        AppX.query(AppX.objects.comment, `Parent.rootId = ${this.props.uid}`+' ORDER BY createTimestamp ASC').then(result => {
             this.setState({
                 comments: result.data.result || []
             });

@@ -43,8 +43,8 @@ export default class Settings extends Component {
 		this.setState({
 			key: env.key,
 			url: env.url,
-			issue: env.issue,
-			message: env.message
+			thread: env.thread,
+			comment: env.comment
 		});
 	}
 
@@ -52,8 +52,8 @@ export default class Settings extends Component {
 		await AsyncStorage.setItem('environment', JSON.stringify({
 			url: this.state.url,
 			key: this.state.key,
-			issue: this.state.issue,
-			message: this.state.message
+			thread: this.state.thread,
+			comment: this.state.comment
 		}));
 
 		await this.props.loadEnvironment();
@@ -67,8 +67,8 @@ export default class Settings extends Component {
 		var env = Environments.find(item => {
 			return item.url == this.state.url &&
 				item.key == this.state.key &&
-				item.issue == this.state.issue &&
-				item.message == this.state.message;
+				item.thread == this.state.thread &&
+				item.comment == this.state.comment;
 		});
 
 		if (env) {
@@ -88,8 +88,8 @@ export default class Settings extends Component {
 			this.setState({
 				url: env.url,
 				key: env.key,
-				issue: env.issue,
-				message: env.message
+				thread: env.thread,
+				comment: env.comment
 			});
 		}
 	}
@@ -122,14 +122,14 @@ export default class Settings extends Component {
 						onChangeText={(text) => this.setState({ key: text })}
 						autoCapitalize='none'
 					/>
-					<TextInput label='Issue Object Identifier'
-						value={this.state.issue}
-						onChangeText={(text) => this.setState({ issue: text })}
+					<TextInput label='Thread Object Identifier'
+						value={this.state.thread}
+						onChangeText={(text) => this.setState({ thread: text })}
 						autoCapitalize='none'
 					/>
-					<TextInput label='Message Object Identifier'
-						value={this.state.message}
-						onChangeText={(text) => this.setState({ message: text })}
+					<TextInput label='Comment Object Identifier'
+						value={this.state.comment}
+						onChangeText={(text) => this.setState({ comment: text })}
 						autoCapitalize='none'
 					/>
 

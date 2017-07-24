@@ -39,14 +39,14 @@ export default class CreateComment extends Component {
 		
 		if(!this.props.comment){
 		var body = {
-			type: '$CCCommentT1',
+			type: AppX.objects.comment,
 			Date: new Date(),
 			Body: this.state.comment,
 			Parent: {
 				reference: 'Thread',
-				rootType: '$CCThreadT1',
+				rootType: AppX.objects.thread,
 				rootId: this.props.id,
-				externalType: '$CCThreadT1',
+				externalType: AppX.objects.thread,
 			},
 			licensee: {
 				'memberId': '5717989018004281',
@@ -61,8 +61,8 @@ export default class CreateComment extends Component {
 			body.ReplyTo = {
 				rootId : this.props.replyTo,
 				reference: 'Comment',
-				rootType: '$CCCommentT1',
-				externalType: '$CCCommentT1',
+				rootType: AppX.objects.comment,
+				externalType: AppX.objects.comment,
 			};
 		}
 

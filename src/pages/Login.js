@@ -68,6 +68,7 @@ export default class Login extends Component {
 		}
 	}
 
+	//Gets username and pw from storage if in dev mode
 	async getCredentials() {
 		var username = await AsyncStorage.getItem('username');
 		var password = await AsyncStorage.getItem('password');
@@ -80,6 +81,7 @@ export default class Login extends Component {
 		}
 	}
 
+	//Sets User login and organization for later use in voting etc.
 	async setUserData() {
 		var userinfo;
 		await AppX.fetch('User', 'self').then(async result => {
@@ -94,6 +96,7 @@ export default class Login extends Component {
 		});
 	}
 
+	//Saves username and pw if in dev mode
 	async setCredentials() {
 		if (this.state.save) {
 			await AsyncStorage.setItem('username', this.state.username);
@@ -105,14 +108,15 @@ export default class Login extends Component {
 		}
 	}
 
+	//Loads environment information for later use
 	async loadEnvironment() {
 		this.environment = JSON.parse(await AsyncStorage.getItem('environment'));
 		if (!this.environment) {
 			this.environment = Environments[0];
 		}
 
-		AppX.objects.issue = this.environment.issue;
-		AppX.objects.message = this.environment.message;
+		AppX.objects.thread = this.environment.thread;
+		AppX.objects.comment = this.environment.comment;
 	}
 
 	/**
