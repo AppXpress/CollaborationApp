@@ -35,7 +35,7 @@ export default class List extends Component {
         Navigation.set(this, {
             title: 'Threads',
             buttons: [
-                { icon: 'add', id: 'createThread' },
+                { icon: 'new-document', id: 'createThread' },
                 { icon: 'user', id: 'logout' }
             ]
         });

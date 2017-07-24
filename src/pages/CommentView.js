@@ -37,9 +37,7 @@ export default class View extends Component {
     }
 
     willAppear(){
-         Navigation.set(this, {
-            title: 'Comment',
-        });
+
         if(this.state.button){
             Navigation.set(this, {
                 title: 'Comment',
@@ -53,14 +51,14 @@ export default class View extends Component {
         screen: 'CreateComment',
         passProps: {
                     id: this.props.uid, reload: () => this.reload(), comment: this.state.comment
-                    }
+                }
         });           
     }
 
 
     reload() {
         AppX.fetch('$CCCommentT1', this.props.uid).then(result => {
-            console.log(result);
+            
             this.setState({
                 comment: result.data
             });
