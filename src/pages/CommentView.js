@@ -145,9 +145,14 @@ renderAttach({ item }) {
             <Page>
                 {this.state.comment &&
                     <Card>
-                        <Field label='Author' entry={this.state.comment.Author} />
-                        <Field label='Author Organization' entry={this.state.comment.AuthorOrg} />
-                        <Field label='Date Created' entry ={this.state.comment.Date} />
+                        <Field.Row>  
+                            <Field label='Author' entry={this.state.comment.Author} />
+                            <Field label='Author Organization' entry={this.state.comment.AuthorOrg} />
+                        </Field.Row>
+                        <Field.Row>
+                            <Field label='Date Created' entry ={this.state.comment.Date} />
+                            <Field label='Time Created' entry={this.state.comment.Time} />
+                        </Field.Row>    
                         <Field label='Body' entry={this.state.comment.Body} />
                     </Card>
                 }
