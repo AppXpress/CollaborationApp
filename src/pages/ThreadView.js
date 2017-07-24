@@ -73,10 +73,9 @@ export default class View extends Component {
                 thread: result.data,
                 refreshing: false
             });
-            console.log(result.data);
         });
 
-        AppX.query('$CCCommentT1', `Parent.rootId = ${this.props.uid}`).then(result => {
+        AppX.query('$CCCommentT1', `Parent.rootId = ${this.props.uid}`+' ORDER BY createTimestamp ASC').then(result => {
             this.setState({
                 comments: result.data.result || []
             });
