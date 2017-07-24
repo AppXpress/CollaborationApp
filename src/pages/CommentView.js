@@ -85,7 +85,26 @@ export default class View extends Component {
         
     }
 
-    renderAttach({ item }) {
+async showAttachment(item) {
+        this.setState({ loading: true });
+        var appx = await AppX.fetchAttachment(item);
+        console.log(appx);
+        this.setState({ loading: false });
+        setTimeout(() => { this.props.navigator.push({ screen: 'ImageDisplay', passProps: { image: appx.data } }); }, 800);
+}    
+
+renderAttach({ item }) {
+        if (item.mimeType == 'image/jpg' || item.mimeType == 'image/png') {
+            return (
+                <ListItem onPress={() => this.showAttachment(item)} >
+                    <ComplexText
+                        main={item.name}
+                        secondary={item.description}
+                        tertiary={item.createUserId}
+                    />
+                </ListItem>
+            );
+        } else {
             return (
                 <ListItem>
                     <ComplexText
@@ -95,8 +114,10 @@ export default class View extends Component {
                     />
                 </ListItem>
             );
-        
+        }
     }
+
+
     renderAttachments() {
         return (
             <Card title='Attachments'>
@@ -110,12 +131,16 @@ export default class View extends Component {
                         <ComplexText main='No attachments' />
                     </ListItem>
                 }
+                {this.state.loading &&
+                    <Loading block />
+                }
             </Card>    
        )}         
 
 
 
     render() {
+
         return (
             <Page>
                 {this.state.comment &&
@@ -134,5 +159,6 @@ export default class View extends Component {
              {this.renderAttachments()}   
             </Page>
     )}
+    
 }                
 

@@ -14,6 +14,7 @@ Navigation.registerComponent('ThreadCreate', () => require('./pages/ThreadCreate
 Navigation.registerComponent('FilterThreads', () => require ('./pages/FilterThreads').default);
 Navigation.registerComponent('CreateComment', () => require ('./pages/CreateComment').default);
 Navigation.registerComponent('CommentView', () => require ('./pages/CommentView').default);
+Navigation.registerComponent('ImageDisplay', () => require ('./pages/ImageDisplay').default);
 
 Navigation.startSingleScreenApp({
     screen: {
