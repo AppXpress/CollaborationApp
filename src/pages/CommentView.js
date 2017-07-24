@@ -30,11 +30,33 @@ export default class View extends Component {
         this.state = {};
 
         Navigation.set(this, {
-            title: 'Comment'
+            title: 'Comment',
         });
 
         this.reload();
     }
+
+    willAppear(){
+         Navigation.set(this, {
+            title: 'Comment',
+        });
+        if(this.state.button){
+            Navigation.set(this, {
+                title: 'Comment',
+                buttons: this.state.button,
+            });
+        }
+    }
+
+    edit(){
+        this.props.navigator.push({
+        screen: 'CreateComment',
+        passProps: {
+                    id: this.props.uid, reload: () => this.reload(), comment: this.state.comment
+                    }
+        });           
+    }
+
 
     reload() {
         AppX.fetch('$CCCommentT1', this.props.uid).then(result => {
@@ -42,8 +64,20 @@ export default class View extends Component {
             this.setState({
                 comment: result.data
             });
-        });
+                if(this.state.comment.Author==global.userLogin){
+                this.setState({button: [
+                    { icon: 'compose', id: 'edit' }
+                ]})
+                 Navigation.set(this, {
+                title: 'Comment',
+                buttons: this.state.button,
+            });
 
+            }
+        });
+        
+
+        
     }
 
     render() {

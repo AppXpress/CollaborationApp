@@ -25,11 +25,16 @@ export default class CreateComment extends Component {
 			title: 'Comment Editor',
 			hue: 'turquoise'
 		});
+
+		if(this.props.comment){
+			this.state = {comment: this.props.comment.Body};
+		}
 	}
 
 	async postComment() {
 		this.setState({ loading: true });
-
+		
+		if(!this.props.comment){
 		var body = {
 			type: '$CCCommentT1',
 			Date: new Date(),
@@ -42,10 +47,19 @@ export default class CreateComment extends Component {
 			},
 			licensee: {
 				'memberId': '5717989018004281',
-			}
-		};
+				}
+			};
+		}else{
+			var editBody = JSON.parse(JSON.stringify(this.props.comment));;
+			editBody.Body = this.state.comment +' (edited)';
+		}
+
+		if(this.props.comment){
+			var appx = await AppX.persist(editBody);
+		}else{
 
 		var appx = await AppX.create(body);
+		}
 
 		if (appx.data) {
 			this.props.navigator.pop();
@@ -62,6 +76,7 @@ export default class CreateComment extends Component {
 			<Page>
 				<Card>
 					<TextInput
+						value={this.state.comment}
 						label='Comment Text'
 						onChangeText={(text) => this.setState({ comment: text })}
 						multiline
