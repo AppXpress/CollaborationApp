@@ -74,9 +74,46 @@ export default class View extends Component {
             }
         });
         
+        AppX.fetchAttachList('$CCCommentT1', this.props.uid).then(({ data }) => {
+            if (data) {
+                this.setState({ attachments: data.result || [] });
+            } else {
+                alert('We weren\'t able to load any attachments. Please try again later!');
+            }
+        });
 
         
     }
+
+    renderAttach({ item }) {
+            return (
+                <ListItem>
+                    <ComplexText
+                        main={item.name}
+                        secondary={item.description}
+                        tertiary={item.createUserId}
+                    />
+                </ListItem>
+            );
+        
+    }
+    renderAttachments() {
+        return (
+            <Card title='Attachments'>
+                <FlatList
+                    data={this.state.attachments}
+                    keyExtractor={item => item.attachmentUid}
+                    renderItem={item => this.renderAttach(item)}
+                />
+                {this.state.attachments && this.state.attachments.length == 0 &&
+                    <ListItem>
+                        <ComplexText main='No attachments' />
+                    </ListItem>
+                }
+            </Card>    
+       )}         
+
+
 
     render() {
         return (
@@ -94,6 +131,7 @@ export default class View extends Component {
                         <Loading />
                     </Card>
                 }
+             {this.renderAttachments()}   
             </Page>
     )}
 }                
