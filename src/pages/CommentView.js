@@ -50,7 +50,7 @@ export default class View extends Component {
         this.props.navigator.push({
         screen: 'CreateComment',
         passProps: {
-                    id: this.props.uid, reload: () => this.reload(), comment: this.state.comment
+                    id: this.props.uid, reload: this.props.reload, comment: this.state.comment
                 }
         });           
     }
@@ -59,7 +59,7 @@ export default class View extends Component {
         this.props.navigator.push({
         screen: 'CreateComment',
         passProps: {
-                    id: this.state.comment.Parent.rootId, reload: () => this.reload(), replyTo: this.state.comment.uid, replyBody: this.state.comment.Body, replyAuthor: this.state.comment.Author
+                    id: this.state.comment.Parent.rootId, reload: this.props.reload, replyTo: this.state.comment.uid, replyBody: this.state.comment.Body, replyAuthor: this.state.comment.Author
                 }
         });           
     }

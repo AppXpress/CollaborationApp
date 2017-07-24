@@ -31,6 +31,7 @@ export default class CreateComment extends Component {
 		if(this.props.comment){
 			this.state = {comment: this.props.comment.Body};
 		}
+		console.log(this.props.navigator)
 	}
 
 	async postComment() {
@@ -72,9 +73,16 @@ export default class CreateComment extends Component {
 		var appx = await AppX.create(body);
 		}
 
+
 		if (appx.data) {
-			this.props.navigator.pop();
-			this.props.reload();
+			if(this.props.replyTo || this.props.comment){
+				this.props.navigator.pop({animated:false});
+				this.props.navigator.pop();
+				this.props.reload();
+			}else{
+				this.props.navigator.pop();
+				this.props.reload();
+			}
 		} else {
 			alert('We were\'nt able to create your comment. Please try again later.');
 		}

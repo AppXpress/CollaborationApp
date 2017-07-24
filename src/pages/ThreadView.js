@@ -91,7 +91,8 @@ export default class View extends Component {
         this.props.navigator.push({
             screen: 'CommentView',
             passProps: {
-                uid: item.uid
+                uid: item.uid,
+                reload: ()=> this.reload()
             }
         });
     }
