@@ -11,7 +11,9 @@ import {
 	Loading,
 	Navigation,
 	Page,
-	TextInput
+	TextInput,
+	ComplexText,
+	ListItem
 } from 'gtn-soho';
 
 export default class CreateComment extends Component {
@@ -54,10 +56,19 @@ export default class CreateComment extends Component {
 			editBody.Body = this.state.comment +' (edited)';
 		}
 
+		if(this.props.replyTo){
+			body.ReplyTo = {
+				rootId : this.props.replyTo,
+				reference: 'Comment',
+				rootType: '$CCCommentT1',
+				externalType: '$CCCommentT1',
+			};
+		}
+
 		if(this.props.comment){
 			var appx = await AppX.persist(editBody);
 		}else{
-
+		console.log(body);
 		var appx = await AppX.create(body);
 		}
 
@@ -75,6 +86,15 @@ export default class CreateComment extends Component {
 		return (
 			<Page>
 				<Card>
+				{this.props.replyBody &&
+				<ListItem>	
+					<ComplexText
+						main="Replying To:"
+						secondary={this.props.replyBody}
+						tertiary={this.props.replyAuthor}
+					/>
+				</ListItem>	
+				}		
 					<TextInput
 						value={this.state.comment}
 						label='Comment Text'

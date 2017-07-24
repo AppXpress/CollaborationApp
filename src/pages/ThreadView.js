@@ -73,6 +73,7 @@ export default class View extends Component {
                 thread: result.data,
                 refreshing: false
             });
+            console.log(result.data);
         });
 
         AppX.query('$CCCommentT1', `Parent.rootId = ${this.props.uid}`).then(result => {
@@ -80,6 +81,7 @@ export default class View extends Component {
                 comments: result.data.result || []
             });
         });
+
     }
 
     showHistory(){
@@ -155,8 +157,18 @@ export default class View extends Component {
                 refreshing={this.state.refreshing}
             >
                 <Card>
-                    <Field label='Title' entry={this.state.thread.Title} />
-                    <Field label='Score' entry={this.state.thread.Score} />
+                    <Field.Row>
+                        <Field label='Title' entry={this.state.thread.Title} />
+                        <Field label='Score' entry={this.state.thread.Score} />
+                    </Field.Row>
+                    <Field.Row>
+                        <Field label='Author' entry={this.state.thread.Author} />
+                        <Field label='Author Organization' entry={this.state.thread.AuthorOrg} />
+                    </Field.Row>
+                    <Field.Row>
+                        <Field label='Date' entry={this.state.thread.Date} />
+                        <Field label='Time' entry={this.state.thread.Time} />
+                    </Field.Row>        
                     <Tag.List>
                         <Button
                             icon='up-arrow'

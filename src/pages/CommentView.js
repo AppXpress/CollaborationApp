@@ -27,7 +27,7 @@ export default class View extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {button: [{ icon: 'send', id: 'reply' }]};
 
         Navigation.set(this, {
             title: 'Comment',
@@ -55,6 +55,14 @@ export default class View extends Component {
         });           
     }
 
+    reply(){
+        this.props.navigator.push({
+        screen: 'CreateComment',
+        passProps: {
+                    id: this.state.comment.Parent.rootId, reload: () => this.reload(), replyTo: this.state.comment.uid, replyBody: this.state.comment.Body, replyAuthor: this.state.comment.Author
+                }
+        });           
+    }
 
     reload() {
         AppX.fetch('$CCCommentT1', this.props.uid).then(result => {
@@ -64,7 +72,8 @@ export default class View extends Component {
             });
                 if(this.state.comment.Author==global.userLogin){
                 this.setState({button: [
-                    { icon: 'compose', id: 'edit' }
+                    { icon: 'compose', id: 'edit' },
+                    { icon: 'send', id: 'reply' }
                 ]})
                  Navigation.set(this, {
                 title: 'Comment',
