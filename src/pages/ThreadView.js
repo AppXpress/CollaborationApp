@@ -15,7 +15,8 @@ import {
     Navigation,
     Button,
     Loading,
-    Tag
+    Tag,
+    Modal,
 } from 'gtn-soho';
 
 import {
@@ -28,16 +29,32 @@ export default class View extends Component {
         super(props);
 
         this.state = {
-            thread: {}
+            thread: {},
+            modalVisible: false,
         };
 
         Navigation.set(this, {
-            title: 'Thread'
+            title: 'Thread',
+            buttons: [
+                { icon: 'check', id: 'showVotes' },
+            ]    
+        });
+    }
+    willAppear(){
+        Navigation.set(this, {
+            title: 'Thread',
+            buttons: [
+                { icon: 'check', id: 'showVotes' },
+            ]    
         });
     }
 
     componentWillMount() {
         this.reload();
+    }
+
+    showVotes(){
+        this.setState({modalVisible:true});
     }
 
     canVote(vote) {
@@ -63,6 +80,10 @@ export default class View extends Component {
                 comments: result.data.result || []
             });
         });
+    }
+
+    showHistory(){
+
     }
 
     viewComment(item) {
@@ -105,6 +126,26 @@ export default class View extends Component {
                 />
             </ListItem>
         );
+    }
+
+    renderVote(item){
+        var vote;
+        if (item.VoteUp == 'true'){
+            vote = 'Upvote';
+        }
+        else if(item.VoteUp == 'false'){
+            vote = 'Downvote';
+        }else{
+            vote= 'None';
+        }
+        return(
+            <ListItem>
+                <ComplexText
+                    main={item.User+ ' of ' + item.UserOrg}
+                    secondary={vote}
+                />
+            </ListItem>        
+        )
     }
 
     render() {
@@ -157,6 +198,16 @@ export default class View extends Component {
                         </ListItem>
                     }
                 </Card>
+                <Modal visible={this.state.modalVisible}
+                        onRequestClose={()=> this.setState({modalVisible: false})}
+                        onClose={()=> this.setState({modalVisible: false})}
+                        >
+                    <FlatList
+                        data={this.state.thread.Votes}
+                        keyExtractor={item=> item.User}
+                        renderItem={({item})=> this.renderVote(item)}
+                    />    
+                </Modal>
             </Page>
         );
     }
