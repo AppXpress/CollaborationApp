@@ -32,6 +32,7 @@ export default class FilterThreads extends Component {
 
     }
 
+    //Sets a query string and a sort by string and passes them back to ThreadList
     setFilter() {
         constraints = [];
 

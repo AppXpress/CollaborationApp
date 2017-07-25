@@ -55,6 +55,7 @@ export default class List extends Component {
         this.props.navigator.resetTo({ screen: 'Login' });
     }
 
+    //Queries objects based on the filter and sort by fields
     reload() {
         this.setState({ refreshing: true });
 
