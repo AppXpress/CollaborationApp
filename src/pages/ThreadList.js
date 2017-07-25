@@ -57,8 +57,9 @@ export default class List extends Component {
 
     reload() {
         this.setState({ refreshing: true });
+        let oql = (this.state.filter || '1=1') + ' order by createTimestamp desc';
 
-        AppX.query(AppX.objects.thread, (this.state.filter || '1=1') + ' order by createTimestamp desc').then(result => {
+        AppX.query(AppX.objects.thread, oql).then(result => {
             if (result.data) {
                 this.setState({
                     threads: result.data.result,
@@ -113,11 +114,13 @@ export default class List extends Component {
                         })}
                     />
                 </ListItem>
+
                 <FlatList
                     data={this.state.threads}
                     keyExtractor={item => item.uid}
                     renderItem={({ item }) => this.renderThread(item)}
                 />
+
                 {!this.state.threads &&
                     <ListItem>
                         <ComplexText
