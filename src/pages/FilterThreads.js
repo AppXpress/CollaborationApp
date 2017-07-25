@@ -41,6 +41,17 @@ export default class FilterThreads extends Component {
         if (this.state.author) {
             constraints.push(`Author CONTAINS "${this.state.author}"`)
         }
+        if (this.state.scoreMod && this.state.score){
+          if(this.state.scoreMod === '1'){
+            constraints.push(`Score >= ${this.state.score}`)
+          }
+          if(this.state.scoreMod === '2'){
+            constraints.push(`Score = ${this.state.score}`)
+          }
+          if(this.state.scoreMod === '3'){
+            constraints.push(`Score <= ${this.state.score}`)
+          }
+        }
         if (this.state.sortby){
             var sortby = (`ORDER BY ${this.state.sortby}`)
         }
@@ -53,6 +64,7 @@ export default class FilterThreads extends Component {
             query += item;
         });
 
+        console.log(query);
         this.props.navigator.pop();
 
         this.props.setFilter(query,sortby);
@@ -71,6 +83,22 @@ export default class FilterThreads extends Component {
                         label='Author'
                         value={this.state.author}
                         onChangeText={(text) => this.setState({ author: text })}
+                    />
+                    <Picker
+                        label='Score modifier'
+                        title='Score modifier'
+                        selectedValue={this.state.scoreMod}
+                        onValueChange={item => this.setState({ scoreMod: item })}
+                    >
+                        <Picker.Item label='none' value={null} />
+                        <Picker.Item label='>=' value='1' />
+                        <Picker.Item label='=' value='2' />
+                        <Picker.Item label='<=' value='3' />
+                    </Picker>
+                    <TextInput
+                        label='Score'
+                        value={this.state.score}
+                        onChangeText={(text) => this.setState({ score: text })}
                     />
                     <Picker
                         label='Sort By'
@@ -94,4 +122,4 @@ export default class FilterThreads extends Component {
         );
     }
 
-}    
+}
