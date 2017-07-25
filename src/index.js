@@ -2,6 +2,13 @@ import {
     Navigation
 } from 'react-native-navigation';
 
+import {
+    EnvStore
+} from 'gtn-platform';
+
+import environments from './Environments';
+EnvStore.setEnvList(environments);
+
 /**
  *	Entry-point for all devices. Registers all necesarry pages
  *	to the navigation library.
@@ -11,10 +18,10 @@ Navigation.registerComponent('Settings', () => require('./pages/Settings').defau
 Navigation.registerComponent('ThreadList', () => require('./pages/ThreadList').default);
 Navigation.registerComponent('ThreadView', () => require('./pages/ThreadView').default);
 Navigation.registerComponent('ThreadCreate', () => require('./pages/ThreadCreate').default);
-Navigation.registerComponent('FilterThreads', () => require ('./pages/FilterThreads').default);
-Navigation.registerComponent('CreateComment', () => require ('./pages/CreateComment').default);
-Navigation.registerComponent('CommentView', () => require ('./pages/CommentView').default);
-Navigation.registerComponent('ImageDisplay', () => require ('./pages/ImageDisplay').default);
+Navigation.registerComponent('FilterThreads', () => require('./pages/FilterThreads').default);
+Navigation.registerComponent('CreateComment', () => require('./pages/CreateComment').default);
+Navigation.registerComponent('CommentView', () => require('./pages/CommentView').default);
+Navigation.registerComponent('ImageDisplay', () => require('./pages/ImageDisplay').default);
 
 Navigation.startSingleScreenApp({
     screen: {

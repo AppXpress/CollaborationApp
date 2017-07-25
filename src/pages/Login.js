@@ -20,8 +20,6 @@ import {
 	AppX
 } from 'gtn-platform';
 
-import Environments from '../Environments';
-
 /**
  * Page component for loggin in
  */
@@ -47,8 +45,7 @@ export default class Login extends Component {
 
 	settings() {
 		this.props.navigator.push({
-			screen: 'Settings',
-			passProps: { loadEnvironment: () => this.loadEnvironment() }
+			screen: 'Settings'
 		});
 	}
 
@@ -62,7 +59,6 @@ export default class Login extends Component {
 	}
 
 	async componentDidMount() {
-		this.loadEnvironment();
 		if (__DEV__) {
 			await this.getCredentials();
 		}
@@ -106,17 +102,6 @@ export default class Login extends Component {
 			await AsyncStorage.setItem('username', '');
 			await AsyncStorage.setItem('password', '');
 		}
-	}
-
-	//Loads environment information for later use
-	async loadEnvironment() {
-		this.environment = JSON.parse(await AsyncStorage.getItem('environment'));
-		if (!this.environment) {
-			this.environment = Environments[0];
-		}
-
-		AppX.objects.thread = this.environment.thread;
-		AppX.objects.comment = this.environment.comment;
 	}
 
 	/**

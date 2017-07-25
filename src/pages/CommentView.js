@@ -27,7 +27,7 @@ export default class View extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {button: [{ icon: 'send', id: 'reply' }]};
+        this.state = { button: [{ icon: 'send', id: 'reply' }] };
 
         Navigation.set(this, {
             title: 'Comment',
@@ -36,9 +36,9 @@ export default class View extends Component {
         this.reload();
     }
 
-    willAppear(){
+    willAppear() {
 
-        if(this.state.button){
+        if (this.state.button) {
             Navigation.set(this, {
                 title: 'Comment',
                 buttons: this.state.button,
@@ -46,44 +46,46 @@ export default class View extends Component {
         }
     }
 
-    edit(){
+    edit() {
         this.props.navigator.push({
-        screen: 'CreateComment',
-        passProps: {
-                    id: this.props.uid, reload: this.props.reload, comment: this.state.comment
-                }
-        });           
+            screen: 'CreateComment',
+            passProps: {
+                id: this.props.uid, reload: this.props.reload, comment: this.state.comment
+            }
+        });
     }
 
-    reply(){
+    reply() {
         this.props.navigator.push({
-        screen: 'CreateComment',
-        passProps: {
-                    id: this.state.comment.Parent.rootId, reload: this.props.reload, replyTo: this.state.comment.uid, replyBody: this.state.comment.Body, replyAuthor: this.state.comment.Author
-                }
-        });           
+            screen: 'CreateComment',
+            passProps: {
+                id: this.state.comment.Parent.rootId, reload: this.props.reload, replyTo: this.state.comment.uid, replyBody: this.state.comment.Body, replyAuthor: this.state.comment.Author
+            }
+        });
     }
 
     reload() {
-        AppX.fetch(AppX.objects.comment, this.props.uid).then(result => {
-            
+        AppX.fetch('&comment', this.props.uid).then(result => {
+
             this.setState({
                 comment: result.data
             });
-                if(this.state.comment.Author==global.userLogin){
-                this.setState({button: [
-                    { icon: 'compose', id: 'edit' },
-                    { icon: 'send', id: 'reply' }
-                ]})
-                 Navigation.set(this, {
-                title: 'Comment',
-                buttons: this.state.button,
-            });
+            if (this.state.comment.Author == global.userLogin) {
+                this.setState({
+                    button: [
+                        { icon: 'compose', id: 'edit' },
+                        { icon: 'send', id: 'reply' }
+                    ]
+                })
+                Navigation.set(this, {
+                    title: 'Comment',
+                    buttons: this.state.button,
+                });
 
             }
         });
-        
-        AppX.fetchAttachList(AppX.objects.comment, this.props.uid).then(({ data }) => {
+
+        AppX.fetchAttachList('&comment', this.props.uid).then(({ data }) => {
             if (data) {
                 this.setState({ attachments: data.result || [] });
             } else {
@@ -91,18 +93,18 @@ export default class View extends Component {
             }
         });
 
-        
+
     }
 
-async showAttachment(item) {
+    async showAttachment(item) {
         this.setState({ loading: true });
         var appx = await AppX.fetchAttachment(item);
         console.log(appx);
         this.setState({ loading: false });
         setTimeout(() => { this.props.navigator.push({ screen: 'ImageDisplay', passProps: { image: appx.data } }); }, 800);
-}    
+    }
 
-renderAttach({ item }) {
+    renderAttach({ item }) {
         if (item.mimeType == 'image/jpg' || item.mimeType == 'image/png') {
             return (
                 <ListItem onPress={() => this.showAttachment(item)} >
@@ -143,8 +145,9 @@ renderAttach({ item }) {
                 {this.state.loading &&
                     <Loading block />
                 }
-            </Card>    
-       )}         
+            </Card>
+        )
+    }
 
 
 
@@ -154,14 +157,14 @@ renderAttach({ item }) {
             <Page>
                 {this.state.comment &&
                     <Card>
-                        <Field.Row>  
+                        <Field.Row>
                             <Field label='Author' entry={this.state.comment.Author} />
                             <Field label='Author Organization' entry={this.state.comment.AuthorOrg} />
                         </Field.Row>
                         <Field.Row>
-                            <Field label='Date Created' entry ={this.state.comment.Date} />
+                            <Field label='Date Created' entry={this.state.comment.Date} />
                             <Field label='Time Created' entry={this.state.comment.Time} />
-                        </Field.Row>    
+                        </Field.Row>
                         <Field label='Body' entry={this.state.comment.Body} />
                     </Card>
                 }
@@ -170,9 +173,10 @@ renderAttach({ item }) {
                         <Loading />
                     </Card>
                 }
-             {this.renderAttachments()}   
+                {this.renderAttachments()}
             </Page>
-    )}
-    
-}                
+        )
+    }
+
+}
 

@@ -28,8 +28,8 @@ export default class CreateComment extends Component {
 			hue: 'turquoise'
 		});
 
-		if(this.props.comment){
-			this.state = {comment: this.props.comment.Body};
+		if (this.props.comment) {
+			this.state = { comment: this.props.comment.Body };
 		}
 		console.log(this.props.navigator)
 	}
@@ -38,50 +38,50 @@ export default class CreateComment extends Component {
 	// then persists or creates depending if were editing or not
 	async postComment() {
 		this.setState({ loading: true });
-		
-		if(!this.props.comment){
-		var body = {
-			type: AppX.objects.comment,
-			Date: new Date(),
-			Body: this.state.comment,
-			Parent: {
-				reference: 'Thread',
-				rootType: AppX.objects.thread,
-				rootId: this.props.id,
-				externalType: AppX.objects.thread,
-			},
-			licensee: {
-				'memberId': '5717989018004281',
+
+		if (!this.props.comment) {
+			var body = {
+				type: '&comment',
+				Date: new Date(),
+				Body: this.state.comment,
+				Parent: {
+					reference: 'Thread',
+					rootType: '&thread',
+					rootId: this.props.id,
+					externalType: '&thread',
+				},
+				licensee: {
+					'memberId': '5717989018004281',
 				}
 			};
-		}else{
+		} else {
 			var editBody = JSON.parse(JSON.stringify(this.props.comment));;
-			editBody.Body = this.state.comment +' (edited)';
+			editBody.Body = this.state.comment + ' (edited)';
 		}
 
-		if(this.props.replyTo){
+		if (this.props.replyTo) {
 			body.ReplyTo = {
-				rootId : this.props.replyTo,
+				rootId: this.props.replyTo,
 				reference: 'Comment',
-				rootType: AppX.objects.comment,
-				externalType: AppX.objects.comment,
+				rootType: '&comment',
+				externalType: '&comment',
 			};
 		}
 
-		if(this.props.comment){
+		if (this.props.comment) {
 			var appx = await AppX.persist(editBody);
-		}else{
-		console.log(body);
-		var appx = await AppX.create(body);
+		} else {
+			console.log(body);
+			var appx = await AppX.create(body);
 		}
 
 
 		if (appx.data) {
-			if(this.props.replyTo || this.props.comment){
-				this.props.navigator.pop({animated:false});
+			if (this.props.replyTo || this.props.comment) {
+				this.props.navigator.pop({ animated: false });
 				this.props.navigator.pop();
 				this.props.reload();
-			}else{
+			} else {
 				this.props.navigator.pop();
 				this.props.reload();
 			}
@@ -96,15 +96,15 @@ export default class CreateComment extends Component {
 		return (
 			<Page>
 				<Card>
-				{this.props.replyBody &&
-				<ListItem>	
-					<ComplexText
-						main="Replying To:"
-						secondary={this.props.replyBody}
-						tertiary={this.props.replyAuthor}
-					/>
-				</ListItem>	
-				}		
+					{this.props.replyBody &&
+						<ListItem>
+							<ComplexText
+								main="Replying To:"
+								secondary={this.props.replyBody}
+								tertiary={this.props.replyAuthor}
+							/>
+						</ListItem>
+					}
 					<TextInput
 						value={this.state.comment}
 						label='Comment Text'

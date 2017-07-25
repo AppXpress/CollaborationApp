@@ -2,6 +2,11 @@ import {
 	Platform
 } from 'react-native';
 
+import {
+	translate,
+	translateProperty
+} from './EnvStore';
+
 import Rest from './Rest';
 
 /**
@@ -18,10 +23,10 @@ export const objects = {};
  * @param {object} env the environment to login to
  * @returns true if successful, null otherwise
  */
-export async function login(user, pass, eid, env) {
+export async function login(user, pass, eid) {
 	try {
 		await new Rest()
-			.base(env.url, env.key)
+			.base()
 			.auth(user, pass, eid);
 
 		return { data: true };
@@ -40,6 +45,8 @@ export async function login(user, pass, eid, env) {
  * @returns the object in json format, or null on failure
  */
 export async function fetch(type, uid, meta) {
+	type = translate(type);
+
 	try {
 		var query = new Rest()
 			.base()
@@ -69,6 +76,8 @@ export async function fetch(type, uid, meta) {
  * @returns the json query data, or null on failure
  */
 export async function query(type, oql, limit, offset) {
+	type = translate(type);
+
 	try {
 		var query = new Rest()
 			.base()
@@ -101,6 +110,8 @@ export async function query(type, oql, limit, offset) {
  * @returns the response json, or null on error
  */
 export async function create(data) {
+	translateProperty(data, 'type');
+
 	try {
 		var response = await new Rest()
 			.base()
@@ -121,6 +132,8 @@ export async function create(data) {
  * @returns the response json, or null on error
  */
 export async function persist(data) {
+	translateProperty(data, 'type');
+
 	try {
 		var response = await new Rest()
 			.base()
@@ -150,6 +163,8 @@ export async function persist(data) {
  * @returns the design json, or null on error
  */
 export async function design(type) {
+	type = translate(type);
+
 	try {
 		var response = await new Rest()
 			.base()
@@ -170,6 +185,8 @@ export async function design(type) {
  * @param {string} action the workflow action to perform
  */
 export async function action(data, action) {
+	translateProperty(data, 'type');
+
 	try {
 		var response = await new Rest()
 			.base()
@@ -195,6 +212,8 @@ export async function action(data, action) {
 
 
 export async function fetchAttachList(type, uid) {
+	type = translate(type);
+
 	try {
 		var response = await new Rest()
 			.base()
@@ -242,6 +261,8 @@ export async function fetchAttachment(item) {
 }
 
 export async function persistAttachment(data, attachment, name, description) {
+	translateProperty(data, 'type');
+
 	try {
 		var response = await new Rest()
 			.base()

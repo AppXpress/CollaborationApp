@@ -37,15 +37,15 @@ export default class View extends Component {
             title: 'Thread',
             buttons: [
                 { icon: 'check', id: 'showVotes' },
-            ]    
+            ]
         });
     }
-    willAppear(){
+    willAppear() {
         Navigation.set(this, {
             title: 'Thread',
             buttons: [
                 { icon: 'check', id: 'showVotes' },
-            ]    
+            ]
         });
     }
 
@@ -53,8 +53,8 @@ export default class View extends Component {
         this.reload();
     }
 
-    showVotes(){
-        this.setState({modalVisible:true});
+    showVotes() {
+        this.setState({ modalVisible: true });
     }
 
     canVote(vote) {
@@ -68,14 +68,14 @@ export default class View extends Component {
             refreshing: true
         });
 
-        AppX.fetch(AppX.objects.thread, this.props.uid).then(result => {
+        AppX.fetch('&thread', this.props.uid).then(result => {
             this.setState({
                 thread: result.data,
                 refreshing: false
             });
         });
 
-        AppX.query(AppX.objects.comment, `Parent.rootId = ${this.props.uid}`+' ORDER BY createTimestamp ASC').then(result => {
+        AppX.query('&comment', `Parent.rootId = ${this.props.uid}` + ' ORDER BY createTimestamp ASC').then(result => {
             this.setState({
                 comments: result.data.result || []
             });
@@ -83,7 +83,7 @@ export default class View extends Component {
 
     }
 
-    showHistory(){
+    showHistory() {
 
     }
 
@@ -92,7 +92,7 @@ export default class View extends Component {
             screen: 'CommentView',
             passProps: {
                 uid: item.uid,
-                reload: ()=> this.reload()
+                reload: () => this.reload()
             }
         });
     }
@@ -130,23 +130,23 @@ export default class View extends Component {
         );
     }
 
-    renderVote(item){
+    renderVote(item) {
         var vote;
-        if (item.VoteUp == 'true'){
+        if (item.VoteUp == 'true') {
             vote = 'Upvote';
         }
-        else if(item.VoteUp == 'false'){
+        else if (item.VoteUp == 'false') {
             vote = 'Downvote';
-        }else{
-            vote= 'None';
+        } else {
+            vote = 'None';
         }
-        return(
+        return (
             <ListItem>
                 <ComplexText
-                    main={item.User+ ' of ' + item.UserOrg}
+                    main={item.User + ' of ' + item.UserOrg}
                     secondary={vote}
                 />
-            </ListItem>        
+            </ListItem>
         )
     }
 
@@ -168,7 +168,7 @@ export default class View extends Component {
                     <Field.Row>
                         <Field label='Date' entry={this.state.thread.Date} />
                         <Field label='Time' entry={this.state.thread.Time} />
-                    </Field.Row>        
+                    </Field.Row>
                     <Tag.List>
                         <Button
                             icon='up-arrow'
@@ -211,14 +211,14 @@ export default class View extends Component {
                     }
                 </Card>
                 <Modal visible={this.state.modalVisible}
-                        onRequestClose={()=> this.setState({modalVisible: false})}
-                        onClose={()=> this.setState({modalVisible: false})}
-                        >
+                    onRequestClose={() => this.setState({ modalVisible: false })}
+                    onClose={() => this.setState({ modalVisible: false })}
+                >
                     <FlatList
                         data={this.state.thread.Votes}
-                        keyExtractor={item=> item.User}
-                        renderItem={({item})=> this.renderVote(item)}
-                    />    
+                        keyExtractor={item => item.User}
+                        renderItem={({ item }) => this.renderVote(item)}
+                    />
                 </Modal>
             </Page>
         );

@@ -2,6 +2,10 @@ import {
 	AsyncStorage
 } from 'react-native';
 
+import {
+	getEnv
+} from './EnvStore';
+
 import base64 from 'base-64';
 
 import RNFetchBlob from 'react-native-fetch-blob'
@@ -89,14 +93,10 @@ export default class Rest {
 	 * @param {string?} url the environment url to use
 	 * @param {string?} key the data key to use
 	 */
-	base(url, key) {
-		if (url && key) {
-			Rest._url = url;
-			Rest._key = key;
-		}
-
-		this._url = Rest._url;
-		this._params['dataKey'] = Rest._key;
+	base() {
+		let env = getEnv();
+		this._url = env.url;
+		this._params['dataKey'] = env.key;
 		this._headers['Authorization'] = Rest._token;
 		this._headers['Content-Type'] = 'application/json';
 		return this;

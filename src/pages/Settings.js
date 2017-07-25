@@ -14,7 +14,8 @@ import {
 } from 'gtn-soho';
 
 import {
-	AppX
+	AppX,
+	EnvStore
 } from 'gtn-platform';
 
 import Environments from '../Environments';
@@ -35,28 +36,28 @@ export default class Settings extends Component {
 	}
 
 	async componentDidMount() {
-		var env = JSON.parse(await AsyncStorage.getItem('environment'));
-		if (!env) {
-			env = Environments[0];
-		}
+		let env = EnvStore.getEnv();
+
+		console.log(env);
 
 		this.setState({
 			key: env.key,
 			url: env.url,
-			thread: env.thread,
-			comment: env.comment
+			thread: env.dictionary['&thread'],
+			comment: env.dictionary['&comment']
 		});
 	}
 
 	async saveSettings() {
-		await AsyncStorage.setItem('environment', JSON.stringify({
+		EnvStore.setEnv({
 			url: this.state.url,
 			key: this.state.key,
-			thread: this.state.thread,
-			comment: this.state.comment
-		}));
+			dictionary: {
+				'&thread': this.state.thread,
+				'&comment': this.state.comment
+			}
+		});
 
-		await this.props.loadEnvironment();
 		this.props.navigator.pop();
 	}
 
@@ -67,8 +68,8 @@ export default class Settings extends Component {
 		var env = Environments.find(item => {
 			return item.url == this.state.url &&
 				item.key == this.state.key &&
-				item.thread == this.state.thread &&
-				item.comment == this.state.comment;
+				item.dictionary['&thread'] == this.state.thread &&
+				item.dictionary['&comment'] == this.state.comment;
 		});
 
 		if (env) {
@@ -88,8 +89,8 @@ export default class Settings extends Component {
 			this.setState({
 				url: env.url,
 				key: env.key,
-				thread: env.thread,
-				comment: env.comment
+				thread: env.dictionary['&thread'],
+				comment: env.dictionary['&comment']
 			});
 		}
 	}

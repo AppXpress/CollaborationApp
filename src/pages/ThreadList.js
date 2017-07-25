@@ -59,7 +59,7 @@ export default class List extends Component {
         this.setState({ refreshing: true });
         let oql = (this.state.filter || '1=1') + (this.state.sortby || ' order by createTimestamp desc');
 
-        AppX.query(AppX.objects.thread, oql).then(result => {
+        AppX.query('&thread', oql).then(result => {
             if (result.data) {
                 this.setState({
                     threads: result.data.result,
