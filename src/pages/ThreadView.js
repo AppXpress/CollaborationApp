@@ -83,9 +83,7 @@ export default class View extends Component {
 
     }
 
-    showHistory() {
 
-    }
 
     viewComment(item) {
         this.props.navigator.push({
@@ -214,6 +212,14 @@ export default class View extends Component {
                     onRequestClose={() => this.setState({ modalVisible: false })}
                     onClose={() => this.setState({ modalVisible: false })}
                 >
+                {!this.state.thread.votes &&
+                    <ListItem>
+                        <ComplexText
+                            main='No votes yet'
+                            secondary='You could be first'
+                        />
+                    </ListItem>    
+                        }
                     <FlatList
                         data={this.state.thread.Votes}
                         keyExtractor={item => item.User}
