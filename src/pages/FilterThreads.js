@@ -9,7 +9,8 @@ import {
     ComplexText,
     Navigation,
     TextInput,
-    Button
+    Button,
+    Picker
 } from 'gtn-soho';
 
 import {
@@ -40,6 +41,9 @@ export default class FilterThreads extends Component {
         if (this.state.author) {
             constraints.push(`Author CONTAINS "${this.state.author}"`)
         }
+        if (this.state.sortby){
+            var sortby = (`ORDER BY ${this.state.sortby}`)
+        }
 
         query = '';
         constraints.forEach(item => {
@@ -50,8 +54,8 @@ export default class FilterThreads extends Component {
         });
 
         this.props.navigator.pop();
-        this.props.setFilter(query);
-        console.log(query)
+
+        this.props.setFilter(query,sortby);
     }
 
     render() {
@@ -68,11 +72,23 @@ export default class FilterThreads extends Component {
                         value={this.state.author}
                         onChangeText={(text) => this.setState({ author: text })}
                     />
+                    <Picker
+                        label='Sort By'
+                        title='Field to Sort By'
+                        selectedValue={this.state.sortby}
+                        onValueChange={item => this.setState({ sortby: item })}
+                    >
+                        <Picker.Item label='Highest Score' value='Score DESC' />
+                        <Picker.Item label='Most Recent' value='Time ASC' />
+                        <Picker.Item label='Oldest' value='Time DESC' />
+                        <Picker.Item label='Lowest Score' value='Score ASC' />
+                    </Picker>
                     <Button
                         title='Set filter'
                         onPress={() => this.setFilter()}
                         primary
                     />
+
                 </Card>
             </Page>
         );

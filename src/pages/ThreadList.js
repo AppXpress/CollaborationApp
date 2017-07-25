@@ -57,7 +57,7 @@ export default class List extends Component {
 
     reload() {
         this.setState({ refreshing: true });
-        let oql = (this.state.filter || '1=1') + ' order by createTimestamp desc';
+        let oql = (this.state.filter || '1=1') + (this.state.sortby || ' order by createTimestamp desc');
 
         AppX.query(AppX.objects.thread, oql).then(result => {
             if (result.data) {
@@ -69,8 +69,11 @@ export default class List extends Component {
         });
     }
 
-    setFilter(query) {
+    setFilter(query, sortby) {
         this.state.filter = query
+        if (sortby) {
+            this.state.sortby = sortby
+        }
         this.reload();
     }
 
@@ -110,7 +113,7 @@ export default class List extends Component {
                         title='Filter'
                         onPress={() => this.props.navigator.push({
                             screen: 'FilterThreads',
-                            passProps: { setFilter: query => this.setFilter(query) }
+                            passProps: { setFilter: (query, sortby) => this.setFilter(query, sortby) }
                         })}
                     />
                 </ListItem>
