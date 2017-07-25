@@ -32,7 +32,7 @@ export default class Touchable extends Component {
 					delayPressIn={0}
 					style={null}
 					background={TouchableNativeFeedback.Ripple(
-						'rgba(0, 0, 0, 0.32)',
+						'rgba(0, 0, 0, 0.6)',
 						this.props.borderless
 					)}
 				>

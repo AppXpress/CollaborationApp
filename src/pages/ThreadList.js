@@ -57,8 +57,11 @@ export default class List extends Component {
 
     reload() {
         this.setState({ refreshing: true });
-       
-        AppX.query(AppX.objects.thread, (this.state.filter || '1=1') + (this.state.sortby || ' order by createTimestamp desc')).then(result => {
+
+        let oql = (this.state.filter || '1=1') + (this.state.sortby || ' order by createTimestamp desc');
+
+        AppX.query(AppX.objects.thread, oql).then(result => {
+
             if (result.data) {
                 this.setState({
                     threads: result.data.result,
@@ -70,8 +73,8 @@ export default class List extends Component {
 
     setFilter(query, sortby) {
         this.state.filter = query
-        if(sortby){
-            this.state.sortby=sortby
+        if (sortby) {
+            this.state.sortby = sortby
         }
         this.reload();
     }
@@ -112,15 +115,17 @@ export default class List extends Component {
                         title='Filter'
                         onPress={() => this.props.navigator.push({
                             screen: 'FilterThreads',
-                            passProps: { setFilter: (query,sortby) => this.setFilter(query,sortby) }
+                            passProps: { setFilter: (query, sortby) => this.setFilter(query, sortby) }
                         })}
                     />
                 </ListItem>
+
                 <FlatList
                     data={this.state.threads}
                     keyExtractor={item => item.uid}
                     renderItem={({ item }) => this.renderThread(item)}
                 />
+
                 {!this.state.threads &&
                     <ListItem>
                         <ComplexText

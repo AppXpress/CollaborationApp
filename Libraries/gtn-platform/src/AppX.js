@@ -64,9 +64,11 @@ export async function fetch(type, uid, meta) {
  * 
  * @param {string} type the type of object to run the query on
  * @param {string} oql the oql statement to use, or null to get all objects
+ * @param {int} limit the number of items to get, or null to get all objects
+ * @param {int} offset the offset of items to get, or null to get from 0
  * @returns the json query data, or null on failure
  */
-export async function query(type, oql) {
+export async function query(type, oql, limit, offset) {
 	try {
 		var query = new Rest()
 			.base()
@@ -75,6 +77,12 @@ export async function query(type, oql) {
 
 		if (oql) {
 			query.param('oql', oql);
+		}
+		if (limit) {
+			query.param('limit', limit);
+		}
+		if (offset) {
+			query.param('offset', offset);
 		}
 
 		var response = await query.get();

@@ -4,6 +4,7 @@ import {
 	StyleSheet,
 	ScrollView,
 	RefreshControl,
+	Modal,
 	View
 } from 'react-native';
 
@@ -33,6 +34,16 @@ export default class Page extends Component {
 					/>
 				}
 			>
+				{this.props.onRefresh && this.props.refreshing &&
+					<Modal
+						visible={true}
+						transparent={true}
+						onRequestClose={() => { }}
+					>
+						<View style={styles.blockUI}></View>
+					</Modal>
+				}
+
 				{this.props.children}
 			</ScrollView>
 		);
@@ -42,5 +53,9 @@ export default class Page extends Component {
 const styles = StyleSheet.create({
 	view: {
 		backgroundColor: getColor('graphite-1')
+	},
+	blockUI: {
+		justifyContent: 'center',
+		flex: 1
 	}
 });
