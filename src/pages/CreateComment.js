@@ -34,6 +34,8 @@ export default class CreateComment extends Component {
 		console.log(this.props.navigator)
 	}
 
+	// Submits the new or edited comment to GTN, creates the comment based on input, 
+	// then persists or creates depending if were editing or not
 	async postComment() {
 		this.setState({ loading: true });
 		
