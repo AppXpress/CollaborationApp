@@ -58,7 +58,6 @@ export default class List extends Component {
     //Queries objects based on the filter and sort by fields
     reload() {
         this.setState({ refreshing: true });
-        console.log(this.state.refreshing);
 
         let oql = (this.state.filter || '1=1') + (this.state.sortby || ' order by createTimestamp desc');
 
