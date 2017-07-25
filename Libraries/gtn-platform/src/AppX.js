@@ -110,7 +110,7 @@ export async function query(type, oql, limit, offset) {
  * @returns the response json, or null on error
  */
 export async function create(data) {
-	translateProperty(data, 'type');
+	data.type = translate(data.type);
 
 	try {
 		var response = await new Rest()
@@ -132,7 +132,7 @@ export async function create(data) {
  * @returns the response json, or null on error
  */
 export async function persist(data) {
-	translateProperty(data, 'type');
+	data.type = translate(data.type);
 
 	try {
 		var response = await new Rest()
@@ -185,7 +185,7 @@ export async function design(type) {
  * @param {string} action the workflow action to perform
  */
 export async function action(data, action) {
-	translateProperty(data, 'type');
+	data.type = translate(data.type);
 
 	try {
 		var response = await new Rest()
@@ -261,7 +261,7 @@ export async function fetchAttachment(item) {
 }
 
 export async function persistAttachment(data, attachment, name, description) {
-	translateProperty(data, 'type');
+	data.type = translate(data.type);
 
 	try {
 		var response = await new Rest()
