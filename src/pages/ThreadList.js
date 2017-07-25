@@ -57,8 +57,7 @@ export default class List extends Component {
 
     reload() {
         this.setState({ refreshing: true });
-        console.log(this.state.sortby);
-
+       
         AppX.query(AppX.objects.thread, (this.state.filter || '1=1') + (this.state.sortby || ' order by createTimestamp desc')).then(result => {
             if (result.data) {
                 this.setState({
