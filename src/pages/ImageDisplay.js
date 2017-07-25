@@ -33,6 +33,7 @@ export default class ImageDisplay extends Component {
 		});
 	}
 
+	//Saves the image to the user's camera roll
 	saveImage(){
 		CameraRoll.saveToCameraRoll(this.props.image).then(()=> alert("Image saved to camera roll."));
 		

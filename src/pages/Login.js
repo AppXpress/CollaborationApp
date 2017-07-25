@@ -85,7 +85,6 @@ export default class Login extends Component {
 			global.userLogin = info.login;
 
 			await AppX.fetch('OrganizationDetail', info.organizationUid).then(result => {
-				console.log(result.data.name);
 				global.userOrgName = result.data.name;
 			});
 
