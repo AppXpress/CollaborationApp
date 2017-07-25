@@ -21,13 +21,11 @@ export const objects = {};
  * @param {string} pass the password to authenticate with
  * @param {string} eid the eid to authenticate with
  * @param {object} env the environment to login to
- * @returns true if successful, null otherwise
  */
 export async function login(user, pass, eid) {
 	try {
-		await new Rest()
-			.base()
-			.auth(user, pass, eid);
+		Rest.credentials(user, pass, eid);
+		await new Rest().base().auth();
 
 		return { data: true };
 	} catch (error) {
@@ -42,7 +40,6 @@ export async function login(user, pass, eid) {
  * @param {string} type the object type to get
  * @param {string} uid the uid of the object to get
  * @param {bool?} meta whether or not to fetch full metadata
- * @returns the object in json format, or null on failure
  */
 export async function fetch(type, uid, meta) {
 	type = translate(type);
@@ -73,7 +70,6 @@ export async function fetch(type, uid, meta) {
  * @param {string} oql the oql statement to use, or null to get all objects
  * @param {int} limit the number of items to get, or null to get all objects
  * @param {int} offset the offset of items to get, or null to get from 0
- * @returns the json query data, or null on failure
  */
 export async function query(type, oql, limit, offset) {
 	type = translate(type);
@@ -107,7 +103,6 @@ export async function query(type, oql, limit, offset) {
  * Creates an object on GT Nexus systems
  * 
  * @param {object} data the object data to create
- * @returns the response json, or null on error
  */
 export async function create(data) {
 	data.type = translate(data.type);
@@ -129,7 +124,6 @@ export async function create(data) {
  * Saves changes in an object to GT Nexus
  * 
  * @param {object} data the data to save
- * @returns the response json, or null on error
  */
 export async function persist(data) {
 	data.type = translate(data.type);
@@ -160,7 +154,6 @@ export async function persist(data) {
  * Gets an objects design from GT Nexus REST API
  * 
  * @param {string} type the type of object to get the design for
- * @returns the design json, or null on error
  */
 export async function design(type) {
 	type = translate(type);

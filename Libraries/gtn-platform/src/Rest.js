@@ -10,13 +10,6 @@ import base64 from 'base-64';
 
 import RNFetchBlob from 'react-native-fetch-blob'
 
-const Fetch = RNFetchBlob.polyfill.Fetch
-
-window.fetch = new Fetch({
-	auto: true,
-	binaryContentTypes: ['image/']
-}).build()
-
 /**
  * Builder class for performing REST API queries
  */
@@ -27,6 +20,21 @@ export default class Rest {
 	static _token;
 	static _credentials;
 	static _environment;
+
+	/**
+	 * Stores user credentials for use in requests
+	 *
+	 * @param {string?} user the username
+	 * @param {string?} pass the password
+	 * @param {string?} eid the eidentity
+	 */
+	static credentials(user, pass, eid) {
+		var auth = user + ':' + pass;
+		if (eid) {
+			auth += ':' + eid;
+		}
+		Rest._credentials = base64.encode(auth);
+	}
 
 	/**
 	 * Creates a new Rest API call
@@ -57,10 +65,10 @@ export default class Rest {
 		}
 
 		/**
-		 * Runs a REST query on the system and returns the result
+		 * Sends a REST query to the system and returns the result
 		 */
-		this._run = async (method, body) => {
-			var config = {};
+		this._send = async (method, body) => {
+			let config = {};
 			if (this._ext) {
 				config = {
 					fileCache: true,
@@ -68,18 +76,24 @@ export default class Rest {
 				};
 			}
 
-			var result = await RNFetchBlob
+			return await RNFetchBlob
 				.config(config)
 				.fetch(method, this._getUrl(), this._headers, body);
+		}
 
-			// Re-auths Retries if this is not an auth request and it hasn't retried already
-			if (!this._auth && !this._retry && result.info().status == 401) {
-				this._retry = true;
-				await new Rest().base().auth();
-				return await this._run(method, body);
+		/**
+		 * Runs a REST query using the send command but with additional error handling
+		 */
+		this._run = async (method, body) => {
+			let result = await this._send(method, body);
+
+			// If it returned an auth error, retry
+			if (result.info().status == 401) {
+				let result = await this.auth(method, body);
 			}
 
-			if (result.info().status < 200 || result.info().status >= 300) {
+			let status = result.info().status;
+			if (status < 200 || status >= 300) {
 				throw new Error('Rest API call failed');
 			}
 
@@ -145,26 +159,17 @@ export default class Rest {
 	}
 
 	/**
-	 * Authenticate the user with the previous or specified credentials
+	 * Runs a request and stores the token on completion
 	 * 
-	 * @param {string?} user the username
-	 * @param {string?} pass the password
-	 * @param {string?} eid the eidentity
+	 * @param {string} method optional method for controlling request
+	 * @param {*} body optional body for sending with the auth request
 	 */
-	async auth(user, pass, eid) {
-		if (user && pass) {
-			var auth = user + ':' + pass;
-			if (eid) {
-				auth += ':' + eid;
-			}
-			Rest._credentials = base64.encode(auth);
-		}
-
-		this._auth = true;
+	async auth(method, body) {
 		this._headers['Authorization'] = 'Basic ' + Rest._credentials;
 
-		var response = await this._run('GET');
+		var response = await this._send(method || 'GET');
 		Rest._token = response.info().headers.Authorization;
+
 		return response;
 	}
 
