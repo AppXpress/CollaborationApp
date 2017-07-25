@@ -3,10 +3,6 @@ import React, {
 } from 'react';
 
 import {
-    FlatList
-} from 'react-native';
-
-import {
     Page,
     Card,
     ComplexText,
@@ -88,9 +84,9 @@ export default class List extends Component {
         });
     }
 
-    renderThread(item) {
+    renderThread = (item) => {
         return (
-            <ListItem onPress={() => this.viewThread(item)}>
+            <ListItem onPress={() => this.viewThread(item)} key={item.uid}>
                 <ComplexText
                     main={item.Title}
                     secondary={item.Date}
@@ -120,11 +116,9 @@ export default class List extends Component {
                     />
                 </ListItem>
 
-                <FlatList
-                    data={this.state.threads}
-                    keyExtractor={item => item.uid}
-                    renderItem={({ item }) => this.renderThread(item)}
-                />
+                {this.state.threads &&
+                    this.state.threads.map(this.renderThread)
+                }
 
                 {!this.state.threads &&
                     <ListItem>

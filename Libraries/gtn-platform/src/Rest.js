@@ -94,7 +94,7 @@ export default class Rest {
 
 			let status = result.info().status;
 			if (status < 200 || status >= 300) {
-				throw new Error('Rest API call failed');
+				throw new Error(`Rest API call to '${this._getUrl()}' failed with error number ${status}`);
 			}
 
 			return result;

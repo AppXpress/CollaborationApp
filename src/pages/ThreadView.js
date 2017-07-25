@@ -3,10 +3,6 @@ import React, {
 } from 'react';
 
 import {
-    FlatList
-} from 'react-native';
-
-import {
     Page,
     Card,
     ComplexText,
@@ -116,9 +112,12 @@ export default class View extends Component {
         });
     }
 
-    renderComment(item) {
+    renderComment = item => {
         return (
-            <ListItem onPress={() => this.viewComment(item)} >
+            <ListItem
+                key={item.uid}
+                onPress={() => this.viewComment(item)}
+            >
                 <ComplexText
                     main={item.Body}
                     secondary={item.Date}
@@ -128,18 +127,16 @@ export default class View extends Component {
         );
     }
 
-    renderVote(item) {
-        var vote;
+    renderVote = item => {
+        let vote = 'None';
         if (item.VoteUp == 'true') {
             vote = 'Upvote';
         }
         else if (item.VoteUp == 'false') {
             vote = 'Downvote';
-        } else {
-            vote = 'None';
         }
         return (
-            <ListItem>
+            <ListItem key={this.voteCount = ++this.voteCount || 0}>
                 <ComplexText
                     main={item.User + ' of ' + item.UserOrg}
                     secondary={vote}
@@ -194,11 +191,11 @@ export default class View extends Component {
                             })}
                         />
                     </ListItem>
-                    <FlatList
-                        data={this.state.comments}
-                        keyExtractor={item => item.uid}
-                        renderItem={({ item }) => this.renderComment(item)}
-                    />
+
+                    {this.state.comments &&
+                        this.state.comments.map(this.renderComment)
+                    }
+
                     {this.state.comments && this.state.comments.length == 0 &&
                         <ListItem>
                             <ComplexText
@@ -212,19 +209,18 @@ export default class View extends Component {
                     onRequestClose={() => this.setState({ modalVisible: false })}
                     onClose={() => this.setState({ modalVisible: false })}
                 >
-                {!this.state.thread.Votes &&
-                    <ListItem>
-                        <ComplexText
-                            main='No votes yet'
-                            secondary='You could be first'
-                        />
-                    </ListItem>    
-                        }
-                    <FlatList
-                        data={this.state.thread.Votes}
-                        keyExtractor={item => item.User}
-                        renderItem={({ item }) => this.renderVote(item)}
-                    />
+                    {!this.state.thread.Votes &&
+                        <ListItem>
+                            <ComplexText
+                                main='No votes yet'
+                                secondary='You could be first'
+                            />
+                        </ListItem>
+                    }
+
+                    {this.state.thread.Votes &&
+                        this.state.thread.Votes.map(this.renderVote)
+                    }
                 </Modal>
             </Page>
         );

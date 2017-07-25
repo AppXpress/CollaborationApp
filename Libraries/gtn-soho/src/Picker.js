@@ -4,7 +4,6 @@ import {
 	Dimensions,
 	StyleSheet,
 	View,
-	FlatList,
 	ScrollView,
 	Text,
 	Picker as PickerBase
@@ -70,9 +69,12 @@ export default class Picker extends Component {
 	 * 
 	 * @param {object} param0 the iterator data, where the item field is the option to render
 	 */
-	renderItem({ item }) {
+	renderItem = item => {
 		return (
-			<ListItem onPress={() => getHandler(this, 'onValueChange')(item.props.value)}>
+			<ListItem
+				key={this.itemCount = ++this.itemCount || 0}
+				onPress={() => getHandler(this, 'onValueChange')(item.props.value)}
+			>
 				<ComplexText
 					main={item.props.label}
 					secondary={item.props.secondary}
@@ -117,11 +119,9 @@ export default class Picker extends Component {
 					onClose={() => this.setState({ visible: false })}
 					onRequestClose={() => this.setState({ visible: false })}
 				>
-					<FlatList
-						data={this.props.children}
-						keyExtractor={item => 'Picker' + item.props.value}
-						renderItem={this.renderItem.bind(this)}
-					/>
+					{this.props.children &&
+						this.props.children.map(this.renderItem)
+					}
 				</Modal>
 			</View>
 		);

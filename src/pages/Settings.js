@@ -38,8 +38,6 @@ export default class Settings extends Component {
 	async componentDidMount() {
 		let env = EnvStore.getEnv();
 
-		console.log(env);
-
 		this.setState({
 			key: env.key,
 			url: env.url,

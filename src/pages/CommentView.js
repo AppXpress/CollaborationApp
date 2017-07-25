@@ -3,10 +3,6 @@ import React, {
 } from 'react';
 
 import {
-    FlatList
-} from 'react-native';
-
-import {
     Page,
     Card,
     ComplexText,
@@ -27,17 +23,22 @@ export default class View extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { button: [{ icon: 'send', id: 'reply' }] };
+        this.state = {
+            button: [
+                { icon: 'send', id: 'reply' }
+            ]
+        };
 
         Navigation.set(this, {
             title: 'Comment',
         });
+    }
 
+    componentWillMount() {
         this.reload();
     }
 
     willAppear() {
-
         if (this.state.button) {
             Navigation.set(this, {
                 title: 'Comment',
@@ -50,7 +51,9 @@ export default class View extends Component {
         this.props.navigator.push({
             screen: 'CreateComment',
             passProps: {
-                id: this.props.uid, reload: this.props.reload, comment: this.state.comment
+                id: this.props.uid,
+                reload: this.props.reload,
+                comment: this.state.comment
             }
         });
     }
@@ -59,29 +62,33 @@ export default class View extends Component {
         this.props.navigator.push({
             screen: 'CreateComment',
             passProps: {
-                id: this.state.comment.Parent.rootId, reload: this.props.reload, replyTo: this.state.comment.uid, replyBody: this.state.comment.Body, replyAuthor: this.state.comment.Author
+                id: this.state.comment.Parent.rootId,
+                reload: this.props.reload,
+                replyTo: this.state.comment.uid,
+                replyBody: this.state.comment.Body,
+                replyAuthor: this.state.comment.Author
             }
         });
     }
 
     reload() {
         AppX.fetch('&comment', this.props.uid).then(result => {
-
             this.setState({
                 comment: result.data
             });
+
             if (this.state.comment.Author == global.userLogin) {
                 this.setState({
                     button: [
                         { icon: 'compose', id: 'edit' },
                         { icon: 'send', id: 'reply' }
                     ]
-                })
+                });
+
                 Navigation.set(this, {
                     title: 'Comment',
                     buttons: this.state.button,
                 });
-
             }
         });
 
@@ -92,8 +99,6 @@ export default class View extends Component {
                 alert('We weren\'t able to load any attachments. Please try again later!');
             }
         });
-
-
     }
 
     async showAttachment(item) {
@@ -104,55 +109,26 @@ export default class View extends Component {
         setTimeout(() => { this.props.navigator.push({ screen: 'ImageDisplay', passProps: { image: appx.data } }); }, 800);
     }
 
-    renderAttach({ item }) {
+    renderAttach = item => {
+        let press = null;
         if (item.mimeType == 'image/jpg' || item.mimeType == 'image/png') {
-            return (
-                <ListItem onPress={() => this.showAttachment(item)} >
-                    <ComplexText
-                        main={item.name}
-                        secondary={item.description}
-                        tertiary={item.createUserId}
-                    />
-                </ListItem>
-            );
-        } else {
-            return (
-                <ListItem>
-                    <ComplexText
-                        main={item.name}
-                        secondary={item.description}
-                        tertiary={item.createUserId}
-                    />
-                </ListItem>
-            );
+            press = () => this.showAttachment(item);
         }
-    }
-
-
-    renderAttachments() {
         return (
-            <Card title='Attachments'>
-                <FlatList
-                    data={this.state.attachments}
-                    keyExtractor={item => item.attachmentUid}
-                    renderItem={item => this.renderAttach(item)}
+            <ListItem
+                key={item.attachmentUid}
+                onPress={press}
+            >
+                <ComplexText
+                    main={item.name}
+                    secondary={item.description}
+                    tertiary={item.createUserId}
                 />
-                {this.state.attachments && this.state.attachments.length == 0 &&
-                    <ListItem>
-                        <ComplexText main='No attachments' />
-                    </ListItem>
-                }
-                {this.state.loading &&
-                    <Loading block />
-                }
-            </Card>
-        )
+            </ListItem >
+        );
     }
-
-
 
     render() {
-
         return (
             <Page>
                 {this.state.comment &&
@@ -168,12 +144,30 @@ export default class View extends Component {
                         <Field label='Body' entry={this.state.comment.Body} />
                     </Card>
                 }
+
+                {this.state.comment &&
+                    <Card title='Attachments'>
+                        {this.state.attachments &&
+                            this.state.attachments.map(this.renderAttach)
+                        }
+
+                        {this.state.attachments && this.state.attachments.length == 0 &&
+                            <ListItem>
+                                <ComplexText main='No attachments' />
+                            </ListItem>
+                        }
+
+                        {this.state.loading &&
+                            <Loading block />
+                        }
+                    </Card>
+                }
+
                 {!this.state.comment &&
                     <Card>
                         <Loading />
                     </Card>
                 }
-                {this.renderAttachments()}
             </Page>
         )
     }
