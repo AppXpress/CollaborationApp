@@ -212,7 +212,7 @@ export default class View extends Component {
                     onRequestClose={() => this.setState({ modalVisible: false })}
                     onClose={() => this.setState({ modalVisible: false })}
                 >
-                {!this.state.thread.votes &&
+                {!this.state.thread.Votes &&
                     <ListItem>
                         <ComplexText
                             main='No votes yet'
