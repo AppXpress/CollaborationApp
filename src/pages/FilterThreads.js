@@ -79,8 +79,8 @@ export default class FilterThreads extends Component {
                         onValueChange={item => this.setState({ sortby: item })}
                     >
                         <Picker.Item label='Highest Score' value='Score DESC' />
-                        <Picker.Item label='Most Recent' value='Time ASC' />
-                        <Picker.Item label='Oldest' value='Time DESC' />
+                        <Picker.Item label='Most Recent' value='createTimestamp DESC' />
+                        <Picker.Item label='Oldest' value='createTimestamp ASC' />
                         <Picker.Item label='Lowest Score' value='Score ASC' />
                     </Picker>
                     <Button
