@@ -31,17 +31,17 @@ export default class CreateComment extends Component {
 		if (this.props.comment) {
 			this.state = { comment: this.props.comment.Body };
 		}
-	}	
+	}
 
-	// Submits the new or edited comment to GTN, creates the comment based on input, 
+	// Submits the new or edited comment to GTN, creates the comment based on input,
 	// then persists or creates depending if were editing or not
 	async postComment() {
 		this.setState({ loading: true });
 
-		if (!this.props.comment) {
+		if (!this.props.comment) {  //if new comment
 			var body = {
 				type: '&comment',
-				Date: new Date(),
+				Date: new Date(),  //today
 				Body: this.state.comment,
 				Parent: {
 					reference: 'Thread',
@@ -54,11 +54,11 @@ export default class CreateComment extends Component {
 				}
 			};
 		} else {
-			var editBody = JSON.parse(JSON.stringify(this.props.comment));;
+			var editBody = JSON.parse(JSON.stringify(this.props.comment));;  //make JSON object from comment being edited
 			editBody.Body = this.state.comment + ' (edited)';
 		}
 
-		if (this.props.replyTo) {
+		if (this.props.replyTo) {  //if replying to a comment
 			body.ReplyTo = {
 				rootId: this.props.replyTo,
 				reference: 'Comment',
