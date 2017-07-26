@@ -39,7 +39,7 @@ export default class List extends Component {
     }
 
     componentWillMount() {
-        this.reload();
+        this.reload('refresh');
     }
 
     createThread() {
