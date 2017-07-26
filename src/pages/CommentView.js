@@ -25,7 +25,7 @@ export default class View extends Component {
 
         this.state = {
             button: [
-                { icon: 'send', id: 'reply' }
+                { icon: 'send', id: 'reply' }  //Navigation buttons
             ]
         };
 
@@ -77,7 +77,7 @@ export default class View extends Component {
                 comment: result.data
             });
 
-            if (this.state.comment.Author == global.userLogin) {
+            if (this.state.comment.Author == global.userLogin) {  //if creator of thread
                 this.setState({
                     button: [
                         { icon: 'compose', id: 'edit' },
@@ -110,7 +110,7 @@ export default class View extends Component {
 
     renderAttach = item => {
         let press = null;
-        if (item.mimeType == 'image/jpg' || item.mimeType == 'image/png') {
+        if (item.mimeType == 'image/jpg' || item.mimeType == 'image/png') {  //if image attachment then show
             press = () => this.showAttachment(item);
         }
         return (
@@ -172,4 +172,3 @@ export default class View extends Component {
     }
 
 }
-
