@@ -152,7 +152,7 @@ export default class List extends Component {
                     onSubmit={() => this.logoutHelper()}
                     onClose={() => this.setState({modalVisible: false})}
                 >
-                <Text style = {{fontSize: 20, textAlign: 'center', numberOfLines: 5}}>
+                <Text style = {{fontSize: 20, textAlign: 'center'}}>
                     Log out?
                 </Text>
                 </Modal>
