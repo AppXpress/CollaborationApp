@@ -104,7 +104,6 @@ export default class View extends Component {
     async showAttachment(item) {
         this.setState({ loading: true });
         var appx = await AppX.fetchAttachment(item);
-        console.log(appx);
         this.setState({ loading: false });
         setTimeout(() => { this.props.navigator.push({ screen: 'ImageDisplay', passProps: { image: appx.data } }); }, 800);
     }
