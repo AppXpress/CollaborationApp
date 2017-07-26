@@ -15,6 +15,15 @@ export function getHandler(obj, name) {
 	}
 }
 
+export let renderAndCache = (data, render) => {
+	if (data && render) {
+		if (!data._cache) {
+			data._cache = render(data);
+		}
+		return data._cache;
+	}
+}
+
 export function parseCase(string) {
 	return string.charAt(0).toUpperCase() + string.substring(1).replace(/[A-Z]/g, ' $&');
 }

@@ -2,10 +2,6 @@ import React, {
     Component
 } from 'react';
 
-import{
-  Text
-} from 'react-native'
-
 import {
     Page,
     Card,
@@ -29,7 +25,7 @@ export default class List extends Component {
         super(props);
 
         this.state = {
-          modalVisible: false
+            modalVisible: false
         };
 
         Navigation.set(this, { title: 'Threads' });
@@ -56,21 +52,20 @@ export default class List extends Component {
     }
 
     logout() {
-      this.setState({modalVisible: true});
-        //this.props.navigator.resetTo({ screen: 'Login' });
+        this.setState({ logout: true });
     }
 
-    logoutHelper(){
-      this.setState({modalVisible: false});
-      this.props.navigator.resetTo({ screen: 'Login' });
+    logoutConfirm() {
+        this.setState({ logout: false });
+        this.props.navigator.resetTo({ screen: 'Login' });
     }
 
     //Queries objects based on the filter and sort by fields
     reload(refresh) {
-        if(refresh){
-        this.setState({ refreshing: true });
-        }else{
-            this.setState({loading: true});
+        if (refresh) {
+            this.setState({ refreshing: true });
+        } else {
+            this.setState({ loading: true });
         }
 
 
@@ -136,8 +131,9 @@ export default class List extends Component {
                     />
                 </ListItem>
 
-                {this.state.threads &&
-                    this.state.threads.map(this.renderThread)
+                {helpers.renderAndCache(
+                    this.state.threads,
+                    (data) => data.map(this.renderThread))
                 }
 
                 {!this.state.threads &&
@@ -148,17 +144,21 @@ export default class List extends Component {
                         />
                     </ListItem>
                 }
-                <Modal visible={this.state.modalVisible}
-                    onSubmit={() => this.logoutHelper()}
-                    onClose={() => this.setState({modalVisible: false})}
-                >
-                <Text style = {{fontSize: 20, textAlign: 'center', numberOfLines: 5}}>
-                    Log out?
-                </Text>
-                </Modal>
+
                 {this.state.loading &&
                     <Loading block />
                 }
+
+                <Modal
+                    title='Log out'
+                    visible={this.state.logout}
+                    onSubmit={() => this.logoutConfirm()}
+                    onClose={() => this.setState({ logout: false })}
+                >
+                    <ListItem>
+                        <ComplexText main='Are you sure you want to log out?' />
+                    </ListItem>
+                </Modal>
             </Page>
         );
     }
