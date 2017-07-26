@@ -4,9 +4,10 @@ import {
 	StyleSheet,
 	ScrollView,
 	RefreshControl,
-	Modal,
 	View
 } from 'react-native';
+
+import Loading from './Loading';
 
 import {
 	getColor
@@ -29,19 +30,13 @@ export default class Page extends Component {
 				style={styles.view}
 				refreshControl={this.props.onRefresh &&
 					<RefreshControl
-						refreshing={this.props.refreshing}
+						refreshing={false}
 						onRefresh={this.props.onRefresh}
 					/>
 				}
 			>
 				{this.props.onRefresh && this.props.refreshing &&
-					<Modal
-						visible={true}
-						transparent={true}
-						onRequestClose={() => { }}
-					>
-						<View style={styles.blockUI}></View>
-					</Modal>
+					<Loading block />
 				}
 
 				{this.props.children}
