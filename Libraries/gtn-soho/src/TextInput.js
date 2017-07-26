@@ -24,7 +24,7 @@ export default class TextInput extends Component {
 	 * Gets the text input style based on the properties it has
 	 */
 	getTextStyle() {
-		var style = {};
+		let style = {};
 
 		if (this.props.disabled) {
 			style.backgroundColor = getColor('graphite-2');

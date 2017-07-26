@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 
 import {
-	getHandler,
-	getColor
+	getHandler
 } from '../helpers';
 
 /**

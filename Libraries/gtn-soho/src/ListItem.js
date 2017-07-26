@@ -25,7 +25,7 @@ export default class ListItem extends Component {
      * Changed the style of the container based on the properties
      */
     getStyle() {
-        var style = {};
+        let style = {};
 
         if (this.props.fill) {
             style.padding = 0;

@@ -38,7 +38,7 @@ export function set(page, config) {
 
     page.props.navigator.setTitle({ title: config.title });
 
-    var style = {
+    let style = {
         navBarTextFontFamily: 'soho',
         navBarSubtitleFontFamily: 'soho',
         navBarTextColor: getColor('white-0'),
@@ -60,7 +60,7 @@ export function set(page, config) {
 
     page.props.navigator.setStyle(style);
 
-    var buttons = [];
+    let buttons = [];
     config.buttons.map(button => {
         buttons.push({
             title: getTitle(button, buttons),

@@ -16,6 +16,7 @@ import {
     Tag,
     Button,
     Modal,
+    helpers
 } from 'gtn-soho';
 
 import {
@@ -45,7 +46,7 @@ export default class List extends Component {
     }
 
     componentWillMount() {
-        this.reload();
+        this.reload('refresh');
     }
 
     createThread() {
@@ -65,8 +66,13 @@ export default class List extends Component {
     }
 
     //Queries objects based on the filter and sort by fields
-    reload() {
+    reload(refresh) {
+        if(refresh){
         this.setState({ refreshing: true });
+        }else{
+            this.setState({loading: true});
+        }
+
 
         let oql = (this.state.filter || '1=1') + (this.state.sortby || ' order by createTimestamp desc');
 
@@ -74,7 +80,8 @@ export default class List extends Component {
             if (result.data) {
                 this.setState({
                     threads: result.data.result,
-                    refreshing: false
+                    refreshing: false,
+                    loading: false,
                 });
             }
         });
@@ -102,7 +109,7 @@ export default class List extends Component {
             <ListItem onPress={() => this.viewThread(item)} key={item.uid}>
                 <ComplexText
                     main={item.Title}
-                    secondary={item.Date}
+                    secondary={item.Date + ' at ' + helpers.formatTime(item.Time)}
                     tertiary={item.Author + ' of ' + item.AuthorOrg}
                 />
                 <Tag.List>
@@ -115,7 +122,7 @@ export default class List extends Component {
     render() {
         return (
             <Page
-                onRefresh={() => this.reload()}
+                onRefresh={() => this.reload('refresh')}
                 refreshing={this.state.refreshing}
             >
                 <ListItem fill>
@@ -149,6 +156,9 @@ export default class List extends Component {
                     Log out?
                 </Text>
                 </Modal>
+                {this.state.loading &&
+                    <Loading block />
+                }
             </Page>
         );
     }
