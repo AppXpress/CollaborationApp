@@ -3,6 +3,10 @@ import React, {
 } from 'react';
 
 import {
+    StyleSheet
+} from 'react-native';
+
+import {
     Page,
     Card,
     ComplexText,
@@ -80,12 +84,9 @@ export default class View extends Component {
                     if (comment.ReplyTo) {
 
                         var uid = comment.ReplyTo.rootId;
-                        var replyed = this.state.comments.find(function (comment) {
+                        comment.replyed = this.state.comments.find(function (comment) {
                             return comment.uid == uid;
-                        })
-                        comment.replyed = {};
-                        comment.replyed.Body = replyed.Body;
-                        comment.replyed.Author = replyed.Author;
+                        });
                     }
                     this.setState({});
                 });
@@ -129,21 +130,18 @@ export default class View extends Component {
     }
 
     renderComment = item => {
-
-
         return (
             <ListItem
                 key={item.uid}
                 onPress={() => this.viewComment(item)}
             >
                 {item.replyed &&
-                    <ListItem>
-                        <ComplexText
-                            main='Replying To'
-                            secondary={item.replyed.Body}
-                            tertiary={item.replyed.Author}
-                        />
-                    </ListItem>
+                    <ComplexText
+                        main={item.replyed.Body}
+                        secondary={item.replyed.Date + ' at ' + helpers.formatTime(item.replyed.Time)}
+                        tertiary={item.replyed.Author + ' of ' + item.replyed.AuthorOrg}
+                        style={styles.reply}
+                    />
                 }
                 <ComplexText
                     main={item.Body}
@@ -255,3 +253,13 @@ export default class View extends Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    reply: {
+        margin: 10,
+        padding: 10,
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        borderColor: helpers.getColor('graphite-3'),
+        borderWidth: 1
+    }
+});

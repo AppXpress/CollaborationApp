@@ -23,7 +23,7 @@ export default class ComplexText extends Component {
      */
     render() {
         return (
-            <View>
+            <View style={this.props.style}>
                 {this.props.main &&
                     <Text style={styles.main}>
                         {this.props.main}
