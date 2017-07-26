@@ -2,6 +2,10 @@ import React, {
     Component
 } from 'react';
 
+import{
+  Text
+} from 'react-native'
+
 import {
     Page,
     Card,
@@ -11,6 +15,7 @@ import {
     Navigation,
     Tag,
     Button,
+    Modal,
 } from 'gtn-soho';
 
 import {
@@ -22,7 +27,9 @@ export default class List extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+          modalVisible: false
+        };
 
         Navigation.set(this, { title: 'Threads' });
     }
@@ -32,7 +39,7 @@ export default class List extends Component {
             title: 'Threads',
             buttons: [
                 { icon: 'new-document', id: 'createThread' },
-                { icon: 'user', id: 'logout' }
+                { icon: 'launch', id: 'logout' }
             ]
         });
     }
@@ -48,7 +55,13 @@ export default class List extends Component {
     }
 
     logout() {
-        this.props.navigator.resetTo({ screen: 'Login' });
+      this.setState({modalVisible: true});
+        //this.props.navigator.resetTo({ screen: 'Login' });
+    }
+
+    logoutHelper(){
+      this.setState({modalVisible: false});
+      this.props.navigator.resetTo({ screen: 'Login' });
     }
 
     //Queries objects based on the filter and sort by fields
@@ -128,6 +141,14 @@ export default class List extends Component {
                         />
                     </ListItem>
                 }
+                <Modal visible={this.state.modalVisible}
+                    onSubmit={() => this.logoutHelper()}
+                    onClose={() => this.setState({modalVisible: false})}
+                >
+                <Text style = {{fontSize: 20, textAlign: 'center', numberOfLines: 5}}>
+                    Log out?
+                </Text>
+                </Modal>
             </Page>
         );
     }
