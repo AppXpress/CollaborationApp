@@ -23,7 +23,7 @@ export default class Icon extends Component {
      */
     static getChar(name) {
         if (name) {
-            var char = config.glyphs.find(item => {
+            let char = config.glyphs.find(item => {
                 return item.css == name;
             });
             if (char) {
@@ -48,7 +48,7 @@ export default class Icon extends Component {
     }
 
     getStyle() {
-        var style = {};
+        let style = {};
         if (this.props.size) {
             style.fontSize = this.props.size;
         }

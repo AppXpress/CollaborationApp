@@ -33,7 +33,7 @@ export default class Modal extends Component {
 	 * Sets the appropriate max height on mount and window size change
 	 */
 	componentDidMount() {
-		var self = this;
+		let self = this;
 		function setHeight(value) {
 			self.setState({
 				height: value
@@ -60,9 +60,9 @@ export default class Modal extends Component {
 		return (
 			<ModalBase
 				{...this.props}
-				visible={new Boolean(this.props.visible).valueOf()}
 				transparent={true}
 				animationType='fade'
+				visible={Boolean(this.props.visible)}
 				onRequestClose={getHandler(this, 'onRequestClose')}
 			>
 				<View style={styles.view}>
@@ -70,6 +70,7 @@ export default class Modal extends Component {
 						<ScrollView style={this.getScrollStyle()}>
 							{this.props.children}
 						</ScrollView>
+
 						<View style={styles.footer}>
 							<View style={styles.footerItem}>
 								<Button
@@ -77,6 +78,7 @@ export default class Modal extends Component {
 									onPress={() => getHandler(this, 'onClose')()}
 								/>
 							</View>
+
 							{this.props.onSubmit &&
 								<View style={styles.footerItem}>
 									<Button

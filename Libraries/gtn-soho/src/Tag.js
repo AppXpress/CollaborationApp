@@ -27,7 +27,7 @@ export default class Tag extends Component {
     }
 
     getViewStyle() {
-        var style = {
+        let style = {
             backgroundColor: getColor('alert-' + this.props.alert, 'graphite-2')
         };
 
@@ -35,7 +35,7 @@ export default class Tag extends Component {
     }
 
     getTextStyle() {
-        var style = {}
+        let style = {}
 
         if (this.props.alert) {
             style.color = getColor('white-0');
@@ -64,13 +64,13 @@ const styles = StyleSheet.create({
     view: {
         height: 22,
         marginRight: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
         borderRadius: 22,
         alignSelf: 'flex-start',
         justifyContent: 'center'
     },
     text: {
-        paddingLeft: 10,
-        paddingRight: 10,
         fontSize: 12,
         color: getColor('graphite-10')
     }

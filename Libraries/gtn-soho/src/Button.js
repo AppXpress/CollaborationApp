@@ -26,7 +26,7 @@ export default class Button extends Component {
 	 * Gets the style for the touchable container based on the components properties
 	 */
 	getTouchableStyle() {
-		var style = {};
+		let style = {};
 
 		if (this.props.primary) {
 			style.backgroundColor = getColor(this.props.hue + '-6', 'azure-6');
@@ -50,7 +50,7 @@ export default class Button extends Component {
 	 * Gets the style for the button text using the component properties
 	 */
 	getTextStyle() {
-		var style = {};
+		let style = {};
 
 		if (this.props.primary) {
 			style.color = getColor('white-0');
@@ -84,14 +84,17 @@ export default class Button extends Component {
 							<Icon name={this.props.icon} />
 						</Text>
 					}
+
 					{this.props.icon && this.props.title &&
 						<View style={{ width: 10 }}></View>
 					}
+
 					{this.props.title &&
 						<Text style={this.getTextStyle()}>
 							{this.props.title.toUpperCase()}
 						</Text>
 					}
+
 					{this.props.children}
 				</Touchable>
 			</View>

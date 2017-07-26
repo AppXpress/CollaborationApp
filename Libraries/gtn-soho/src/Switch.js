@@ -18,23 +18,13 @@ import {
 export default class Switch extends Component {
 	constructor(props) {
 		super(props);
-
-		this.state = {};
-	}
-
-	componentWillReceiveProps(next) {
-		this.setState({ value: next.value });
-	}
-
-	onValueChange(value) {
-		this.setState({ value: value });
 	}
 
 	/**
 	 * Gets the color based on the current value
 	 */
 	getThumbTintColor() {
-		if (this.state.value) {
+		if (this.props.value) {
 			return getColor(this.props.hue + '-6', 'azure-6');
 		}
 		return getColor('white-0');
@@ -48,13 +38,11 @@ export default class Switch extends Component {
 			<View style={styles.view}>
 				<SwitchBase
 					{...this.props}
-					style={styles.switch}
 					tintColor={getColor('graphite-4')}
 					onTintColor={getColor(this.props.hue + '-3', 'azure-3')}
 					thumbTintColor={this.getThumbTintColor()}
-					onValueChange={getHandler(this, 'onValueChange')}
-					value={this.props.value}
 				/>
+
 				<Text style={styles.label}>
 					{this.props.label}
 				</Text>
@@ -72,6 +60,6 @@ const styles = StyleSheet.create({
 	title: {
 		paddingLeft: 10,
 		fontSize: 14,
-		color: '#1a1a1a'
+		color: getColor('graphite-10')
 	}
 });

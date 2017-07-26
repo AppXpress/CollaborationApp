@@ -48,7 +48,7 @@ export default class Picker extends Component {
 	 * Gets the current label for the field based on the value
 	 */
 	getLabel() {
-		var selected = this.props.children.find(item => {
+		let selected = this.props.children.find(item => {
 			return item.props.value == this.state.value;
 		});
 

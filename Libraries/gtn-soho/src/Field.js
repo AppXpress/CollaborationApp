@@ -24,11 +24,13 @@ export default class Field extends Component {
 	 * Helper component that rendered multiple items side by side in a row
 	 */
 	static Row = (props) => {
-		var i = 0;
 		return (
 			<View style={styles.row}>
 				{props.children && props.children.map(child =>
-					<View style={styles.column} key={i++}>
+					<View
+						key={this.i = ++this.i || 0}
+						style={styles.column}
+					>
 						{child}
 					</View>
 				)}
@@ -46,9 +48,11 @@ export default class Field extends Component {
 	render() {
 		return (
 			<View style={styles.view}>
-				<Text style={styles.label}>
-					{this.props.label}
-				</Text>
+				{this.props.label &&
+					<Text style={styles.label}>
+						{this.props.label}
+					</Text>
+				}
 
 				{this.props.entry &&
 					<Text style={styles.entry}>

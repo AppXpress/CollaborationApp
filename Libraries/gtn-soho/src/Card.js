@@ -31,6 +31,7 @@ export default class Card extends Component {
 						</Text>
 					</View>
 				}
+
 				{this.props.children}
 			</View>
 		);

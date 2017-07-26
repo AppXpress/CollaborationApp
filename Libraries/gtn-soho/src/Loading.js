@@ -72,6 +72,7 @@ export default class Loading extends Component {
                 >
                     <View style={styles.view}>
                         {this.indicator(true)}
+
                         <Text style={this.textStyle()}>
                             Loading
                         </Text>
@@ -82,6 +83,7 @@ export default class Loading extends Component {
             return (
                 <ListItem>
                     {this.indicator()}
+
                     <Text style={this.textStyle()}>
                         Loading
                     </Text>
