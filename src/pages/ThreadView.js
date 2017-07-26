@@ -75,7 +75,22 @@ export default class View extends Component {
         AppX.query('&comment', `Parent.rootId = ${this.props.uid}` + ' ORDER BY createTimestamp ASC').then(result => {
             this.setState({
                 comments: result.data.result || []
+            }, () => {
+                this.state.comments.forEach((comment) => {
+                    if (comment.ReplyTo) {
+
+                        var uid = comment.ReplyTo.rootId;
+                        var replyed = this.state.comments.find(function (comment) {
+                            return comment.uid == uid;
+                        })
+                        comment.replyed = {};
+                        comment.replyed.Body = replyed.Body;
+                        comment.replyed.Author = replyed.Author;
+                    }
+                    this.setState({});
+                });
             });
+
         });
 
     }
@@ -114,11 +129,22 @@ export default class View extends Component {
     }
 
     renderComment = item => {
+
+
         return (
             <ListItem
                 key={item.uid}
                 onPress={() => this.viewComment(item)}
             >
+                {item.replyed &&
+                    <ListItem>
+                        <ComplexText
+                            main='Replying To'
+                            secondary={item.replyed.Body}
+                            tertiary={item.replyed.Author}
+                        />
+                    </ListItem>
+                }
                 <ComplexText
                     main={item.Body}
                     secondary={item.Date + ' at ' + helpers.formatTime(item.Time)}
