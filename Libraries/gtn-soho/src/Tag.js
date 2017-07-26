@@ -51,8 +51,10 @@ export default class Tag extends Component {
         return (
             <View style={this.getViewStyle()}>
                 <Text style={this.getTextStyle()}>
-                    {this.props.children}
+                    {this.props.text}
                 </Text>
+
+                {this.props.children}
             </View>
         );
     }
@@ -62,13 +64,13 @@ const styles = StyleSheet.create({
     view: {
         height: 22,
         marginRight: 10,
-        paddingLeft: 10,
-        paddingRight: 10,
         borderRadius: 22,
         alignSelf: 'flex-start',
         justifyContent: 'center'
     },
     text: {
+        paddingLeft: 10,
+        paddingRight: 10,
         fontSize: 12,
         color: getColor('graphite-10')
     }
