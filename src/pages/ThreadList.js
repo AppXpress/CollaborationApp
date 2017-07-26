@@ -11,6 +11,7 @@ import {
     Navigation,
     Tag,
     Button,
+    helpers
 } from 'gtn-soho';
 
 import {
@@ -95,11 +96,11 @@ export default class List extends Component {
             <ListItem onPress={() => this.viewThread(item)} key={item.uid}>
                 <ComplexText
                     main={item.Title}
-                    secondary={item.Date}
+                    secondary={item.Date + ' at ' + helpers.formatTime(item.Time)}
                     tertiary={item.Author + ' of ' + item.AuthorOrg}
                 />
                 <Tag.List>
-                    <Tag>{'Score: ' + item.Score}</Tag>
+                    <Tag text={'Score: ' + item.Score} />
                 </Tag.List>
             </ListItem >
         );

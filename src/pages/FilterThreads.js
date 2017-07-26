@@ -36,7 +36,7 @@ export default class FilterThreads extends Component {
     setFilter() {
         constraints = [];
 
-        if (this.state.title) {
+        if (this.state.title) {  //pushing oql search terms
             constraints.push(`Title CONTAINS "${this.state.title}"`);
         }
         if (this.state.author) {
@@ -68,7 +68,7 @@ export default class FilterThreads extends Component {
         console.log(query);
         this.props.navigator.pop();
 
-        this.props.setFilter(query,sortby);
+        this.props.setFilter(query,sortby);  //sets filter in ThreadList
     }
 
     render() {

@@ -67,6 +67,7 @@ export default class ThreadCreate extends Component {
             return;
         }
 
+        //moves back to list then forward to new thread
         this.props.navigator.pop();
         this.props.navigator.push({
             screen: 'ThreadView',

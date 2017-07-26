@@ -19,6 +19,13 @@ export function parseCase(string) {
 	return string.charAt(0).toUpperCase() + string.substring(1).replace(/[A-Z]/g, ' $&');
 }
 
+export function formatTime(string) {
+	if (string) {
+		return string.replace('GMT-0000 (UTC)', '(UTC)');
+	}
+	return string;
+}
+
 /**
  * Gets a SoHo color by name
  * 

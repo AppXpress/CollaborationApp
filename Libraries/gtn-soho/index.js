@@ -13,6 +13,7 @@ module.exports = {
     get Switch() { return require('./src/Switch').default },
     get Tag() { return require('./src/Tag').default },
     get TextInput() { return require('./src/TextInput').default },
+    get Touchable() { return require('./src/Touchable').default },
 
     get helpers() { return require('./helpers') }
 };

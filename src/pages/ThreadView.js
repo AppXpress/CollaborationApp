@@ -13,6 +13,7 @@ import {
     Loading,
     Tag,
     Modal,
+    helpers
 } from 'gtn-soho';
 
 import {
@@ -120,7 +121,7 @@ export default class View extends Component {
             >
                 <ComplexText
                     main={item.Body}
-                    secondary={item.Date}
+                    secondary={item.Date + ' at ' + helpers.formatTime(item.Time)}
                     tertiary={item.Author + ' of ' + item.AuthorOrg}
                 />
             </ListItem>
@@ -162,7 +163,7 @@ export default class View extends Component {
                     </Field.Row>
                     <Field.Row>
                         <Field label='Date' entry={this.state.thread.Date} />
-                        <Field label='Time' entry={this.state.thread.Time} />
+                        <Field label='Time' entry={helpers.formatTime(this.state.thread.Time)} />
                     </Field.Row>
                     <Tag.List>
                         <Button
@@ -205,7 +206,9 @@ export default class View extends Component {
                         </ListItem>
                     }
                 </Card>
-                <Modal visible={this.state.modalVisible}
+                <Modal
+                    title='Votes'
+                    visible={this.state.modalVisible}
                     onRequestClose={() => this.setState({ modalVisible: false })}
                     onClose={() => this.setState({ modalVisible: false })}
                 >
