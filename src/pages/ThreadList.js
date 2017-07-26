@@ -93,7 +93,7 @@ export default class List extends Component {
                     tertiary={item.Author + ' of ' + item.AuthorOrg}
                 />
                 <Tag.List>
-                    <Tag>{'Score: ' + item.Score}</Tag>
+                    <Tag text={'Score: ' + item.Score} />
                 </Tag.List>
             </ListItem >
         );
