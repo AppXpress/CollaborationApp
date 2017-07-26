@@ -52,8 +52,13 @@ export default class List extends Component {
     }
 
     //Queries objects based on the filter and sort by fields
-    reload() {
+    reload(refresh) {
+        if(refresh){
         this.setState({ refreshing: true });
+        }else{
+            this.setState({loading: true});
+        }
+
 
         let oql = (this.state.filter || '1=1') + (this.state.sortby || ' order by createTimestamp desc');
 
@@ -61,7 +66,8 @@ export default class List extends Component {
             if (result.data) {
                 this.setState({
                     threads: result.data.result,
-                    refreshing: false
+                    refreshing: false,
+                    loading: false,
                 });
             }
         });
@@ -102,7 +108,7 @@ export default class List extends Component {
     render() {
         return (
             <Page
-                onRefresh={() => this.reload()}
+                onRefresh={() => this.reload('refresh')}
                 refreshing={this.state.refreshing}
             >
                 <ListItem fill>
@@ -127,6 +133,9 @@ export default class List extends Component {
                             secondary='Try refreshing or chaning the filter!'
                         />
                     </ListItem>
+                }
+                {this.state.loading &&
+                    <Loading block />
                 }
             </Page>
         );
