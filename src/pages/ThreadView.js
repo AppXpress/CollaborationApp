@@ -68,6 +68,13 @@ export default class View extends Component {
                 comments: result.data.result || []
             }, () => {
                 this.state.comments.forEach((comment) => {
+                    AppX.fetchAttachList('&comment', comment.uid).then((result)=>{
+                        if(result.data.resultInfo.count > 0){
+                            console.log('cdond true')
+                            comment.hasAttachment = true;
+                            this.setState({});
+                        }
+                    });
                     if (comment.ReplyTo) {
                         var uid = comment.ReplyTo.rootId;
                         comment.replyed = this.state.comments.find(function (comment) {
@@ -132,6 +139,11 @@ export default class View extends Component {
                     secondary={item.Date + ' at ' + helpers.formatTime(item.Time)}
                     tertiary={item.Author + ' of ' + item.AuthorOrg}
                 />
+                {item.hasAttachment &&
+                <Tag.List>
+                    <Tag text={'Has Attachment'} />
+                </Tag.List>
+                }
             </ListItem>
         );
     }
