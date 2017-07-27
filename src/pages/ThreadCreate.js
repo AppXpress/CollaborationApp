@@ -40,6 +40,9 @@ export default class ThreadCreate extends Component {
 
     async createThread() {
         this.setState({ loading: true });
+        if (this.state.body.length > 10000){
+    			alert("Sorry, text postings are only supported up to 10,000 characters.");
+    		} else {
 
         let result = await AppX.create({
             type: '&thread',
@@ -75,6 +78,7 @@ export default class ThreadCreate extends Component {
                 getThread: () => thread
             }
         });
+      }
     }
 
     render() {

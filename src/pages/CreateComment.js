@@ -49,6 +49,9 @@ export default class CreateComment extends Component {
 		this.setState({ loading: true });
 
 		let appx;
+		if (this.state.text.length > 10000){
+			alert("Sorry, text postings are only supported up to 10,000 characters.");
+		} else {
 		if (this.state.comment) {
 			this.state.comment.Body = this.state.text + ' (edited)';
 			appx = await AppX.persist(this.state.comment);
@@ -84,9 +87,9 @@ export default class CreateComment extends Component {
 		} else {
 			alert('We were\'nt able to save your comment. Please try again later.');
 		}
-
-		this.setState({ loading: false });
 	}
+	this.setState({ loading: false });
+}
 
 	render() {
 		return (
