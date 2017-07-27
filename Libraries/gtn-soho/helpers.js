@@ -15,22 +15,13 @@ export function getHandler(obj, name) {
 	}
 }
 
-export let renderAndCache = (data, render) => {
-	if (data && render) {
-		if (!data._cache) {
-			data._cache = render(data);
-		}
-		return data._cache;
-	}
-}
-
 export function parseCase(string) {
 	return string.charAt(0).toUpperCase() + string.substring(1).replace(/[A-Z]/g, ' $&');
 }
 
 export function formatTime(string) {
 	if (string) {
-		return string.replace('GMT-0000 (UTC)', '(UTC)');
+		return string.replace(/ GMT-\d{4}/, '');
 	}
 	return string;
 }

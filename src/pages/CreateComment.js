@@ -28,8 +28,9 @@ export default class CreateComment extends Component {
 			hue: 'turquoise'
 		});
 
-		if (this.props.comment) {
-			this.state = { comment: this.props.comment.Body };
+		if (this.props.getComment) {
+			this.state.comment = this.props.getComment();
+			this.state.text = this.state.comment.Body;
 		}
 	}
 
@@ -38,54 +39,42 @@ export default class CreateComment extends Component {
 	async postComment() {
 		this.setState({ loading: true });
 
-		if (!this.props.comment) {  //if new comment
-			var body = {
+		let appx;
+		if (this.state.comment) {
+			this.state.comment.Body = this.state.text + ' (edited)';
+			appx = await AppX.persist(this.state.comment);
+		} else {
+			let body = {
 				type: '&comment',
-				Date: new Date(),  //today
-				Body: this.state.comment,
+				Body: this.state.text,
 				Parent: {
 					reference: 'Thread',
 					rootType: '&thread',
-					rootId: this.props.id,
+					rootId: this.props.getThread().uid,
 					externalType: '&thread',
-				},
-				licensee: {
-					'memberId': '5717989018004281',
 				}
 			};
-		} else {
-			var editBody = JSON.parse(JSON.stringify(this.props.comment));;  //make JSON object from comment being edited
-			editBody.Body = this.state.comment + ' (edited)';
-		}
 
-		if (this.props.replyTo) {  //if replying to a comment
-			body.ReplyTo = {
-				rootId: this.props.replyTo,
-				reference: 'Comment',
-				rootType: '&comment',
-				externalType: '&comment',
-			};
-		}
+			if (this.props.getReply) {
+				body.ReplyTo = {
+					rootId: this.props.getReply().uid,
+					reference: 'Comment',
+					rootType: '&comment'
+				};
+			}
 
-		if (this.props.comment) {
-			var appx = await AppX.persist(editBody);
-		} else {
-			console.log(body);
-			var appx = await AppX.create(body);
+			appx = await AppX.create(body);
 		}
-
 
 		if (appx.data) {
-			if (this.props.replyTo || this.props.comment) {
-				this.props.navigator.pop({ animated: false });
+			if (this.props.getComment) {
 				this.props.navigator.pop();
-				this.props.reload();
+				this.props.update();
 			} else {
 				this.props.navigator.pop();
-				this.props.reload();
 			}
 		} else {
-			alert('We were\'nt able to create your comment. Please try again later.');
+			alert('We were\'nt able to save your comment. Please try again later.');
 		}
 
 		this.setState({ loading: false });
@@ -105,9 +94,9 @@ export default class CreateComment extends Component {
 						</ListItem>
 					}
 					<TextInput
-						value={this.state.comment}
+						value={this.state.text}
 						label='Comment Text'
-						onChangeText={(text) => this.setState({ comment: text })}
+						onChangeText={(text) => this.setState({ text: text })}
 						multiline
 						rows={7}
 					/>

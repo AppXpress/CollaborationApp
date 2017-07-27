@@ -72,7 +72,7 @@ export default class ThreadCreate extends Component {
         this.props.navigator.push({
             screen: 'ThreadView',
             passProps: {
-                uid: thread.uid
+                getThread: () => thread
             }
         });
     }

@@ -84,8 +84,8 @@ export default class View extends Component {
         this.props.navigator.push({
             screen: 'CommentView',
             passProps: {
-                uid: item.uid,
-                reload: () => this.reload()
+                getComment: () => item,
+                update: () => this.setState({})
             }
         });
     }
@@ -194,7 +194,7 @@ export default class View extends Component {
                             onPress={() => this.props.navigator.push({
                                 screen: 'CreateComment',
                                 passProps: {
-                                    id: this.props.uid, reload: () => this.reload()
+                                    id: this.state.thread.uid, reload: () => this.reload()
                                 }
                             })}
                         />
