@@ -50,7 +50,7 @@ export default class CreateComment extends Component {
 
 		let appx;
 		if (this.state.text.length > 10000){
-			alert("Sorry, text postings are only supported up to 10,000 characters.");
+			alert("Sorry, text postings are only supported up to 10000 characters, yours is "+this.state.text.length+".");
 		} else {
 		if (this.state.comment) {
 			this.state.comment.Body = this.state.text + ' (edited)';
