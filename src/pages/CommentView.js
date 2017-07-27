@@ -92,7 +92,7 @@ export default class View extends Component {
                     buttons: this.state.button,
                 });
             }
-            console.log(result);
+            
             if (result.data.ReplyTo){
                 AppX.fetch('&comment', result.data.ReplyTo.rootId).then(replyResult => {
                     this.setState({

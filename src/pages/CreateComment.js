@@ -70,7 +70,6 @@ export default class CreateComment extends Component {
 		if (this.props.comment) {
 			var appx = await AppX.persist(editBody);
 		} else {
-			console.log(body);
 			var appx = await AppX.create(body);
 		}
 
