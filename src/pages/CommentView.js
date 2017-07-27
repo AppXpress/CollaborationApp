@@ -72,7 +72,8 @@ export default class View extends Component {
             screen: 'CreateComment',
             passProps: {
                 getThread: this.props.getThread,
-                getReply: () => this.state.comment
+                getReply: () => this.state.comment,
+                update: this.props.update
             }
         });
     }

@@ -67,12 +67,11 @@ export default class CreateComment extends Component {
 		}
 
 		if (appx.data) {
-			if (this.props.getComment) {
-				this.props.navigator.pop();
-				this.props.update();
-			} else {
-				this.props.navigator.pop();
+			if (this.props.getReply) {
+				this.props.navigator.pop({ animate: false });
 			}
+			this.props.navigator.pop();
+			this.props.update();
 		} else {
 			alert('We were\'nt able to save your comment. Please try again later.');
 		}
