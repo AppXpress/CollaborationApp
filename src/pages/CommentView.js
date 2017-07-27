@@ -77,6 +77,8 @@ export default class View extends Component {
                 comment: result.data
             });
 
+
+
             if (this.state.comment.Author == global.userLogin) {  //if creator of thread
                 this.setState({
                     button: [
@@ -88,6 +90,14 @@ export default class View extends Component {
                 Navigation.set(this, {
                     title: 'Comment',
                     buttons: this.state.button,
+                });
+            }
+            console.log(result);
+            if (result.data.ReplyTo){
+                AppX.fetch('&comment', result.data.ReplyTo.rootId).then(replyResult => {
+                    this.setState({
+                        reply: replyResult.data
+                    });
                 });
             }
         });
@@ -131,7 +141,7 @@ export default class View extends Component {
         return (
             <Page>
                 {this.state.comment &&
-                    <Card>
+                    <Card title="Comment">
                         <Field.Row>
                             <Field label='Author' entry={this.state.comment.Author} />
                             <Field label='Author Organization' entry={this.state.comment.AuthorOrg} />
@@ -143,6 +153,22 @@ export default class View extends Component {
                         <Field label='Body' entry={this.state.comment.Body} />
                     </Card>
                 }
+
+                {this.state.reply &&
+                    <Card title="Reply To">
+                         <Field.Row>
+                            <Field label='Author' entry={this.state.reply.Author} />
+                            <Field label='Author Organization' entry={this.state.reply.AuthorOrg} />
+                        </Field.Row>
+                        <Field.Row>
+                            <Field label='Date Created' entry={this.state.reply.Date} />
+                            <Field label='Time Created' entry={this.state.reply.Time} />
+                        </Field.Row>
+                        <Field label='Body' entry={this.state.reply.Body} />
+
+                    </Card>    
+                }
+
 
                 {this.state.comment &&
                     <Card title='Attachments'>
