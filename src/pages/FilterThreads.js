@@ -65,7 +65,6 @@ export default class FilterThreads extends Component {
             query += item;
         });
 
-        console.log(query);
         this.props.navigator.pop();
 
         this.props.setFilter(query,sortby);  //sets filter in ThreadList
