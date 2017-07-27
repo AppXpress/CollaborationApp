@@ -24,16 +24,17 @@ export default class Field extends Component {
 	 * Helper component that rendered multiple items side by side in a row
 	 */
 	static Row = (props) => {
+		let i = 0;
 		return (
 			<View style={styles.row}>
-				{props.children && props.children.map(child =>
+				{props.children instanceof Array && props.children.map(child =>
 					<View
-						key={this.i = ++this.i || 0}
+						key={i++}
 						style={styles.column}
 					>
 						{child}
 					</View>
-				)}
+				) || props.children}
 			</View>
 		);
 	}
