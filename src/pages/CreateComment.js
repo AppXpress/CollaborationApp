@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 import {
+	StyleSheet
+} from 'react-native';
+
+import {
 	AppX
 } from 'gtn-platform';
 
@@ -13,7 +17,8 @@ import {
 	Page,
 	TextInput,
 	ComplexText,
-	ListItem
+	ListItem,
+	helpers
 } from 'gtn-soho';
 
 export default class CreateComment extends Component {
@@ -31,6 +36,10 @@ export default class CreateComment extends Component {
 		if (this.props.getComment) {
 			this.state.comment = this.props.getComment();
 			this.state.text = this.state.comment.Body;
+		}
+
+		if (this.props.getReply) {
+			this.state.reply = this.props.getReply();
 		}
 	}
 
@@ -83,27 +92,29 @@ export default class CreateComment extends Component {
 		return (
 			<Page>
 				<Card>
-					{this.props.replyBody &&
+					{this.state.reply &&
 						<ListItem>
 							<ComplexText
-								main="Replying To:"
-								secondary={this.props.replyBody}
-								tertiary={this.props.replyAuthor}
+								main={this.state.reply.Body}
+								secondary={this.state.reply.Date + ' at ' + helpers.formatTime(this.state.reply.Time)}
+								tertiary={this.state.reply.Author + ' of ' + this.state.reply.AuthorOrg}
+								style={styles.reply}
 							/>
 						</ListItem>
 					}
+
 					<TextInput
-						value={this.state.text}
 						label='Comment Text'
+						value={this.state.text}
 						onChangeText={(text) => this.setState({ text: text })}
 						multiline
 						rows={7}
 					/>
 
 					<Button
-						primary
-						hue='turquoise'
 						title='Submit'
+						hue='turquoise'
+						primary
 						onPress={() => this.postComment()}
 					/>
 
@@ -115,3 +126,13 @@ export default class CreateComment extends Component {
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+	reply: {
+		margin: 10,
+		padding: 10,
+		backgroundColor: 'rgba(0, 0, 0, 0.1)',
+		borderColor: helpers.getColor('graphite-3'),
+		borderWidth: 1
+	}
+});
