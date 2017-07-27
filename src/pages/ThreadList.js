@@ -68,7 +68,6 @@ export default class List extends Component {
             this.setState({ loading: true });
         }
 
-
         let oql = (this.state.filter || '1=1') + (this.state.sortby || ' order by createTimestamp desc');
 
         AppX.query('&thread', oql).then(result => {
@@ -77,6 +76,7 @@ export default class List extends Component {
                     threads: result.data.result,
                     refreshing: false,
                     loading: false,
+                    renderCache: null
                 });
             }
         });
@@ -94,7 +94,8 @@ export default class List extends Component {
         this.props.navigator.push({
             screen: 'ThreadView',
             passProps: {
-                uid: item.uid
+                getThread: () => item,
+                update: () => this.setState({ renderCache: null })
             }
         });
     }
@@ -131,9 +132,8 @@ export default class List extends Component {
                     />
                 </ListItem>
 
-                {helpers.renderAndCache(
-                    this.state.threads,
-                    (data) => data.map(this.renderThread))
+                {this.state.threads &&
+                    (this.state.renderCache || (this.state.renderCache = this.state.threads.map(this.renderThread)))
                 }
 
                 {!this.state.threads &&

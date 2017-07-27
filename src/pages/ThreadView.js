@@ -30,17 +30,13 @@ export default class View extends Component {
         super(props);
 
         this.state = {
-            thread: {},
+            thread: this.props.getThread(),
             modalVisible: false,
         };
 
-        Navigation.set(this, {
-            title: 'Thread',
-            buttons: [
-                { icon: 'check', id: 'showVotes' },
-            ]
-        });
+        Navigation.set(this, { title: 'Thread' });
     }
+
     willAppear() {
         Navigation.set(this, {
             title: 'Thread',
@@ -65,38 +61,24 @@ export default class View extends Component {
     }
 
     reload() {
-        this.setState({
-            refreshing: true
-        });
+        this.setState({ refreshing: true });
 
-        AppX.fetch('&thread', this.props.uid).then(result => {
-            this.setState({
-                thread: result.data,
-                refreshing: false
-            });
-        });
-
-        AppX.query('&comment', `Parent.rootId = ${this.props.uid}` + ' ORDER BY createTimestamp ASC').then(result => {
+        AppX.query('&comment', `Parent.rootId = ${this.state.thread.uid}` + ' ORDER BY createTimestamp ASC').then(result => {
             this.setState({
                 comments: result.data.result || []
             }, () => {
                 this.state.comments.forEach((comment) => {
                     if (comment.ReplyTo) {
-
                         var uid = comment.ReplyTo.rootId;
                         comment.replyed = this.state.comments.find(function (comment) {
                             return comment.uid == uid;
                         });
                     }
-                    this.setState({});
                 });
+                this.setState({ refreshing: false });
             });
-
         });
-
     }
-
-
 
     viewComment(item) {
         this.props.navigator.push({
@@ -126,6 +108,7 @@ export default class View extends Component {
 
         AppX.persist(this.state.thread).then(result => {
             this.setState({ refreshing: false });
+            this.props.update();
         });
     }
 
