@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import {
-	StyleSheet
+	StyleSheet,
+	View
 } from 'react-native';
 
 import {
@@ -96,14 +97,13 @@ export default class CreateComment extends Component {
 			<Page>
 				<Card>
 					{this.state.reply &&
-						<ListItem>
+						<View style={styles.reply}>
 							<ComplexText
-								main={this.state.reply.Body}
-								secondary={this.state.reply.Date + ' at ' + helpers.formatTime(this.state.reply.Time)}
-								tertiary={this.state.reply.Author + ' of ' + this.state.reply.AuthorOrg}
-								style={styles.reply}
+								secondary={this.state.reply.Author + ' of ' + this.state.reply.AuthorOrg}
+								tertiary={this.state.reply.Date + ' at ' + helpers.formatTime(this.state.reply.Time)}
 							/>
-						</ListItem>
+							<ComplexText main={this.state.reply.Body} />
+						</View>
 					}
 
 					<TextInput
