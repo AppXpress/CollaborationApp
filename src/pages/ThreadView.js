@@ -3,7 +3,8 @@ import React, {
 } from 'react';
 
 import {
-    StyleSheet
+    StyleSheet,
+    View
 } from 'react-native';
 
 import {
@@ -24,7 +25,7 @@ import {
     AppX
 } from 'gtn-platform';
 
-export default class View extends Component {
+export default class ThreadView extends Component {
 
     constructor(props) {
         super(props);
@@ -68,8 +69,8 @@ export default class View extends Component {
                 comments: result.data.result || []
             }, () => {
                 this.state.comments.forEach((comment) => {
-                    AppX.fetchAttachList('&comment', comment.uid).then((result)=>{
-                        if(result.data.resultInfo.count > 0){
+                    AppX.fetchAttachList('&comment', comment.uid).then((result) => {
+                        if (result.data.resultInfo.count > 0) {
                             console.log('cdond true')
                             comment.hasAttachment = true;
                             this.setState({});
@@ -127,22 +128,25 @@ export default class View extends Component {
                 onPress={() => this.viewComment(item)}
             >
                 {item.replyed &&
-                    <ComplexText
-                        main={item.replyed.Body}
-                        secondary={item.replyed.Date + ' at ' + helpers.formatTime(item.replyed.Time)}
-                        tertiary={item.replyed.Author + ' of ' + item.replyed.AuthorOrg}
-                        style={styles.reply}
-                    />
+                    <View style={styles.reply}>
+                        <ComplexText
+                            secondary={item.replyed.Author + ' of ' + item.replyed.AuthorOrg}
+                            tertiary={item.replyed.Date + ' at ' + helpers.formatTime(item.replyed.Time)}
+                        />
+                        <ComplexText main={item.replyed.Body} />
+                    </View>
                 }
+
                 <ComplexText
-                    main={item.Body}
-                    secondary={item.Date + ' at ' + helpers.formatTime(item.Time)}
-                    tertiary={item.Author + ' of ' + item.AuthorOrg}
+                    secondary={item.Author + ' of ' + item.AuthorOrg}
+                    tertiary={item.Date + ' at ' + helpers.formatTime(item.Time)}
                 />
+                <ComplexText main={item.Body} />
+
                 {item.hasAttachment &&
-                <Tag.List>
-                    <Tag text={'Has Attachment'} />
-                </Tag.List>
+                    <Tag.List>
+                        <Tag text={'Has Attachment'} />
+                    </Tag.List>
                 }
             </ListItem>
         );
