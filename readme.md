@@ -1,6 +1,6 @@
 # Customer Collaboration App
 
-The customer collaboration app is an app written in React-Native that allows different GT Nexus customers to collabaorate on ideas and feedback for the GT Nexus platform.
+Customer Collaboration is an app written in React-Native that allows different GT Nexus customers to collaborate on ideas and feedback for the GT Nexus platform.
 
   - Create threads and discuss back and forth
   - Support for voting on threads
